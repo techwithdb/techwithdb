@@ -1,0 +1,85 @@
+baseURL = "https://techwithdb.github.io/aws-devops-blog/"
+languageCode = "en-us"
+title = "TechWithDB"
+[pagination]
+  pagerSize = 9
+enableRobotsTXT = true
+enableGitInfo = true
+copyright = "© 2025 CloudOps Hub. All rights reserved."
+
+[params]
+  description  = "Practical AWS & DevOps tutorials — real-world projects, deep dives, and interview prep by DB."
+  author       = "CloudOps Hub"
+  github       = "https://github.com/yourusername"
+  linkedin     = "https://linkedin.com/in/yourprofile"
+  twitter      = "https://twitter.com/yourhandle"
+  googleFormURL = "https://forms.gle/YOUR_GOOGLE_FORM_ID"
+  googleAnalytics = ""   # e.g. G-XXXXXXXXXX
+
+[markup]
+  [markup.highlight]
+    style          = "github"
+    lineNos        = true
+    lineNumbersInTable = true
+    tabWidth       = 2
+  [markup.goldmark.renderer]
+    unsafe = true        # allow raw HTML in Markdown
+
+[taxonomies]
+  tag      = "tags"
+  category = "categories"
+  series   = "series"
+
+# ── Main navigation ──────────────────────────────────────────
+[menu]
+  [[menu.main]]
+    name   = "Home"
+    url    = "/"
+    weight = 1
+
+  [[menu.main]]
+    name   = "AWS"
+    url    = "/aws/"
+    weight = 2
+    [menu.main.params]
+      icon   = "fab fa-aws"
+      hasDropdown = true
+
+  [[menu.main]]
+    name   = "DevOps"
+    url    = "/devops/"
+    weight = 3
+    [menu.main.params]
+      icon   = "fas fa-infinity"
+      hasDropdown = true
+
+  [[menu.main]]
+    name   = "Interview Q&A"
+    url    = "/interview-questions/"
+    weight = 4
+    [menu.main.params]
+      icon = "fas fa-comments"
+
+  [[menu.main]]
+    name   = "Blog"
+    url    = "/blog/"
+    weight = 5
+    [menu.main.params]
+      icon = "fas fa-pen-nib"
+
+  [[menu.main]]
+    name   = "Contact"
+    url    = "/contact/"
+    weight = 6
+    [menu.main.params]
+      icon = "fas fa-envelope"
+
+# ── Output formats (adds JSON for search) ────────────────────
+[outputs]
+  home    = ["HTML", "RSS", "JSON"]
+  page    = ["HTML"]
+  section = ["HTML", "RSS"]
+
+[sitemap]
+  changefreq = "weekly"
+  priority   = 0.5

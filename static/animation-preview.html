@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>TechWithDB — Preview</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet"/>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"/>
+<style>
+:root {
+  --purple:#6d28d9; --blue:#4f46e5; --cyan:#0891b2;
+  --aws:#d97706; --green:#16a34a; --red:#dc2626;
+  --text:#1e293b; --text-2:#475569; --text-3:#64748b; --text-4:#94a3b8;
+  --surface:#fff; --surface-2:#f1f5f9; --border:#e2e8f0;
+  --bg:#f8fafc; --r:8px; --r-pill:999px;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);font-size:15px;}
+
+/* NAVBAR */
+.navbar{background:var(--surface);border-bottom:1px solid var(--border);height:60px;display:flex;align-items:center;padding:0 40px;position:sticky;top:0;z-index:100;box-shadow:0 1px 4px rgba(0,0,0,.06);}
+.logo{font-size:1.15rem;font-weight:800;color:var(--purple);letter-spacing:-.5px;}
+.logo-b{color:var(--aws);}
+.nav-links{display:flex;gap:2px;list-style:none;margin-left:auto;}
+.nav-links a{color:var(--text-2);padding:6px 13px;border-radius:6px;font-size:.875rem;font-weight:500;cursor:pointer;transition:.18s;}
+.nav-links a:hover,.nav-links a.active{color:var(--purple);background:#ede9fe;}
+.nav-cta{padding:7px 16px;margin-left:8px;background:linear-gradient(135deg,var(--purple),var(--blue));color:#fff;border-radius:6px;font-size:.82rem;font-weight:600;cursor:pointer;}
+
+/* HERO */
+.hero{background:linear-gradient(135deg,#6d28d9 0%,#4f46e5 50%,#0891b2 100%);padding:96px 28px 84px;text-align:center;position:relative;overflow:hidden;}
+.hero::before{content:'';position:absolute;inset:0;background-image:linear-gradient(rgba(255,255,255,.05) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.05) 1px,transparent 1px);background-size:48px 48px;pointer-events:none;}
+.hero-inner{position:relative;z-index:1;max-width:820px;margin:0 auto;}
+
+.hero-badge{display:inline-block;background:rgba(255,255,255,.2);color:#fff;border:1px solid rgba(255,255,255,.35);padding:5px 18px;border-radius:var(--r-pill);font-size:.72rem;font-weight:700;letter-spacing:1px;text-transform:uppercase;margin-bottom:28px;animation:fadeDown .5s ease both;}
+.hero h1{color:#fff;font-size:clamp(2.4rem,5vw,3.5rem);font-weight:800;line-height:1.15;letter-spacing:-.5px;margin-bottom:20px;animation:fadeDown .5s .08s ease both;}
+.hero h1 em{color:#fde68a;font-style:normal;}
+.hero p{color:rgba(255,255,255,.88);max-width:550px;margin:0 auto 36px;font-size:1.02rem;line-height:1.72;animation:fadeDown .5s .16s ease both;}
+.hero-btns{display:flex;gap:14px;justify-content:center;flex-wrap:wrap;margin-bottom:36px;animation:fadeDown .5s .24s ease both;}
+.btn{display:inline-flex;align-items:center;gap:7px;padding:11px 28px;border-radius:var(--r);font-family:'Inter',sans-serif;font-weight:700;font-size:.9rem;cursor:pointer;text-decoration:none;transition:.18s;border:none;line-height:1;}
+.btn-primary{background:#fff;color:var(--purple);box-shadow:0 4px 14px rgba(0,0,0,.15);}
+.btn-primary:hover{background:#f8f9fa;transform:translateY(-2px);}
+.btn-outline{border:1.5px solid rgba(255,255,255,.5);color:#fff;background:rgba(255,255,255,.12);}
+.btn-outline:hover{background:rgba(255,255,255,.22);border-color:#fff;}
+.hero-chips{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;animation:fadeDown .5s .32s ease both;}
+.chip{background:rgba(255,255,255,.18);color:#fff;border:1px solid rgba(255,255,255,.3);padding:5px 16px;border-radius:var(--r-pill);font-size:.78rem;font-weight:600;}
+
+/* TICKER */
+.ticker-wrap{background:var(--surface);border-bottom:1px solid var(--border);overflow:hidden;padding:11px 0;user-select:none;}
+.ticker-track{display:flex;width:max-content;animation:ticker 32s linear infinite;}
+.ticker-track:hover{animation-play-state:paused;}
+.ticker-track span{display:inline-flex;align-items:center;gap:9px;padding:0 28px;font-size:.8rem;font-weight:600;color:var(--text-3);white-space:nowrap;border-right:1px solid var(--border);transition:.18s;}
+.ticker-track span:hover{color:var(--purple);}
+.ticker-track span i{font-size:.88rem;}
+@keyframes ticker{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+
+/* STATS */
+.stats-bar{background:var(--surface);border-bottom:1px solid var(--border);padding:22px 40px;}
+.stats-inner{max-width:900px;margin:0 auto;display:flex;gap:56px;justify-content:center;flex-wrap:wrap;}
+.stat{text-align:center;}
+.stat-num{font-size:1.65rem;font-weight:800;line-height:1.2;display:block;}
+.stat-label{font-size:.72rem;color:var(--text-4);font-weight:600;text-transform:uppercase;letter-spacing:.5px;margin-top:4px;}
+.s-purple{color:var(--purple);}.s-orange{color:var(--aws);}.s-green{color:var(--green);}.s-blue{color:var(--blue);}
+
+/* TECH SHOWCASE */
+.showcase{padding:64px 40px;background:var(--bg);}
+.showcase-inner{max-width:1200px;margin:0 auto;}
+.section-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:28px;}
+.section-head h2{font-size:1.45rem;font-weight:800;color:var(--text);}
+.view-all{color:var(--purple);font-weight:700;font-size:.85rem;cursor:pointer;}
+.tech-row{margin-bottom:32px;}
+.tech-row-label{font-size:.73rem;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:var(--text-3);margin-bottom:12px;display:flex;align-items:center;gap:7px;}
+.tech-row-label i{color:var(--aws);}
+.tech-cards-scroll{display:flex;gap:12px;overflow-x:auto;padding-bottom:8px;scrollbar-width:thin;scrollbar-color:var(--border) transparent;}
+.tech-cards-scroll::-webkit-scrollbar{height:4px;}
+.tech-cards-scroll::-webkit-scrollbar-thumb{background:var(--border);border-radius:99px;}
+.tsc{flex-shrink:0;width:114px;background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:18px 12px 14px;display:flex;flex-direction:column;align-items:center;gap:9px;cursor:pointer;transition:.18s;position:relative;overflow:hidden;text-decoration:none;color:inherit;}
+.tsc::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:var(--tc,var(--purple));opacity:0;transition:.18s;}
+.tsc:hover{border-color:var(--tc,var(--purple));transform:translateY(-5px);box-shadow:0 10px 28px rgba(0,0,0,.09);}
+.tsc:hover::before{opacity:1;}
+.tsc-icon{width:50px;height:50px;border-radius:11px;display:flex;align-items:center;justify-content:center;font-size:1.45rem;}
+.tsc-name{font-size:.8rem;font-weight:700;color:var(--text);text-align:center;line-height:1.2;}
+.tsc-desc{font-size:.66rem;color:var(--text-3);text-align:center;}
+
+/* POSTS */
+.posts-section{padding:64px 40px;background:var(--surface);}
+.posts-inner{max-width:1200px;margin:0 auto;}
+.posts-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;}
+.post-card{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:24px;box-shadow:0 1px 4px rgba(0,0,0,.05);cursor:pointer;display:flex;flex-direction:column;transition:.18s;animation:fadeUp .5s ease both;}
+.post-card:hover{transform:translateY(-4px);box-shadow:0 8px 28px rgba(109,40,217,.12);border-color:var(--purple);}
+.card-meta{display:flex;align-items:center;gap:7px;flex-wrap:wrap;margin-bottom:12px;}
+.tag-pill{background:#ede9fe;color:var(--purple);padding:2px 10px;border-radius:var(--r-pill);font-size:.7rem;font-weight:700;}
+.card-date{color:var(--text-4);font-size:.72rem;margin-left:auto;}
+.post-card h3{font-size:.97rem;font-weight:700;line-height:1.4;color:var(--text);margin-bottom:9px;}
+.post-card p{color:var(--text-3);font-size:.84rem;line-height:1.6;flex:1;}
+.read-link{margin-top:14px;color:var(--purple);font-weight:700;font-size:.8rem;}
+
+/* FOOTER */
+.footer{background:var(--text);border-top:3px solid var(--purple);padding:24px 40px;}
+.footer-inner{max-width:1200px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;}
+.footer-inner p{color:rgba(255,255,255,.45);font-size:.82rem;}
+.footer-inner strong{color:#fde68a;}
+.footer-links{display:flex;gap:20px;}
+.footer-links a{color:rgba(255,255,255,.4);font-size:.82rem;cursor:pointer;transition:.18s;}
+.footer-links a:hover{color:#fff;}
+
+@keyframes fadeDown{from{opacity:0;transform:translateY(-14px)}to{opacity:1;transform:translateY(0)}}
+@keyframes fadeUp{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:translateY(0)}}
+@media(max-width:900px){.posts-grid{grid-template-columns:repeat(2,1fr)}.hero h1{font-size:2.2rem}}
+@media(max-width:600px){.navbar{padding:0 20px}.hero{padding:64px 20px 56px}.posts-grid{grid-template-columns:1fr}.nav-cta,.nav-links{display:none}}
+</style>
+</head>
+<body>
+
+<nav class="navbar">
+  <div class="logo"><span class="logo-b">&lt;</span>TechWith<span class="logo-b">DB</span><span class="logo-b">/&gt;</span></div>
+  <ul class="nav-links">
+    <li><a class="active">Home</a></li>
+    <li><a>AWS</a></li>
+    <li><a>DevOps</a></li>
+    <li><a>Interview Q&A</a></li>
+    <li><a>About</a></li>
+  </ul>
+  <div class="nav-cta">Submit a Question</div>
+</nav>
+
+<section class="hero">
+  <div class="hero-inner">
+    <div class="hero-badge">☁️ AWS &amp; DevOps Blog</div>
+    <h1>Level Up Your<br><em>Cloud &amp; DevOps</em> Skills</h1>
+    <p>Practical tutorials, real-world projects, and deep dives into AWS, Kubernetes, Terraform, CI/CD and more — by DB.</p>
+    <div class="hero-btns">
+      <a class="btn btn-primary">Read Articles</a>
+      <a class="btn btn-outline">Interview Prep</a>
+    </div>
+    <div class="hero-chips">
+      <span class="chip">AWS</span>
+      <span class="chip">Terraform</span>
+      <span class="chip">Kubernetes</span>
+      <span class="chip">Docker</span>
+      <span class="chip">CI/CD</span>
+      <span class="chip">GitHub Actions</span>
+    </div>
+  </div>
+</section>
+
+<div class="ticker-wrap"><div class="ticker-track" id="tickerTrack"></div></div>
+
+<div class="stats-bar">
+  <div class="stats-inner">
+    <div class="stat"><span class="stat-num s-purple">50+</span><div class="stat-label">Articles</div></div>
+    <div class="stat"><span class="stat-num s-orange">10</span><div class="stat-label">AWS Services</div></div>
+    <div class="stat"><span class="stat-num s-green">200+</span><div class="stat-label">Interview Q&As</div></div>
+    <div class="stat"><span class="stat-num s-blue">100%</span><div class="stat-label">Free</div></div>
+  </div>
+</div>
+
+<section class="showcase">
+  <div class="showcase-inner">
+    <div class="section-head"><h2>Everything You'll Master</h2><span class="view-all">Start Learning →</span></div>
+    <div class="tech-row">
+      <div class="tech-row-label"><i class="fab fa-aws"></i> AWS Services</div>
+      <div class="tech-cards-scroll" id="awsRow"></div>
+    </div>
+    <div class="tech-row">
+      <div class="tech-row-label"><i class="fas fa-infinity"></i> DevOps Tools</div>
+      <div class="tech-cards-scroll" id="devopsRow"></div>
+    </div>
+  </div>
+</section>
+
+<section class="posts-section">
+  <div class="posts-inner">
+    <div class="section-head"><h2>Latest Articles</h2><span class="view-all">View All →</span></div>
+    <div class="posts-grid" id="postsGrid"></div>
+  </div>
+</section>
+
+<footer class="footer">
+  <div class="footer-inner">
+    <p>© 2024 <strong>TechWithDB</strong> — Built with Hugo &amp; ❤️</p>
+    <div class="footer-links"><a>GitHub</a><a>LinkedIn</a><a>RSS</a></div>
+  </div>
+</footer>
+
+<script>
+const awsTools=[
+  {name:'EC2',desc:'Virtual Compute',icon:'fas fa-server',col:'#FF9900'},
+  {name:'S3',desc:'Object Storage',icon:'fas fa-database',col:'#FF9900'},
+  {name:'Lambda',desc:'Serverless',icon:'fas fa-bolt',col:'#FF9900'},
+  {name:'VPC',desc:'Networking',icon:'fas fa-network-wired',col:'#FF9900'},
+  {name:'RDS',desc:'Managed DB',icon:'fas fa-database',col:'#3B82F6'},
+  {name:'EKS',desc:'Managed K8s',icon:'fas fa-dharmachakra',col:'#FF9900'},
+  {name:'IAM',desc:'Access Control',icon:'fas fa-shield-halved',col:'#dc2626'},
+  {name:'CloudFormation',desc:'IaC Templates',icon:'fas fa-layer-group',col:'#FF9900'},
+  {name:'Route 53',desc:'DNS Service',icon:'fas fa-route',col:'#FF9900'},
+  {name:'CloudWatch',desc:'Monitoring',icon:'fas fa-chart-line',col:'#FF9900'},
+];
+const devopsTools=[
+  {name:'Docker',desc:'Containers',icon:'fab fa-docker',col:'#2496ED'},
+  {name:'Kubernetes',desc:'Orchestration',icon:'fas fa-dharmachakra',col:'#326CE5'},
+  {name:'Jenkins',desc:'CI/CD Pipelines',icon:'fas fa-gears',col:'#D33833'},
+  {name:'GitHub Actions',desc:'Automation',icon:'fab fa-github',col:'#6d28d9'},
+  {name:'Prometheus',desc:'Metrics',icon:'fas fa-fire',col:'#E6522C'},
+  {name:'Grafana',desc:'Dashboards',icon:'fas fa-chart-bar',col:'#F46800'},
+  {name:'Terraform',desc:'Infrastructure',icon:'fas fa-cube',col:'#7c3aed'},
+  {name:'Ansible',desc:'Configuration',icon:'fas fa-sliders',col:'#EE0000'},
+];
+const tickerItems=[
+  {icon:'fab fa-aws',col:'#FF9900',name:'AWS'},
+  {icon:'fab fa-docker',col:'#2496ED',name:'Docker'},
+  {icon:'fas fa-dharmachakra',col:'#326CE5',name:'Kubernetes'},
+  {icon:'fas fa-gears',col:'#D33833',name:'Jenkins'},
+  {icon:'fab fa-github',col:'#6d28d9',name:'GitHub Actions'},
+  {icon:'fas fa-fire',col:'#E6522C',name:'Prometheus'},
+  {icon:'fas fa-chart-bar',col:'#F46800',name:'Grafana'},
+  {icon:'fas fa-cube',col:'#7c3aed',name:'Terraform'},
+  {icon:'fas fa-bolt',col:'#FF9900',name:'Lambda'},
+  {icon:'fas fa-server',col:'#FF9900',name:'EC2'},
+  {icon:'fas fa-shield-halved',col:'#dc2626',name:'IAM'},
+  {icon:'fas fa-network-wired',col:'#FF9900',name:'VPC'},
+  {icon:'fab fa-linux',col:'#475569',name:'Linux'},
+  {icon:'fas fa-layer-group',col:'#FF9900',name:'CloudFormation'},
+];
+const posts=[
+  {tags:['AWS','S3'],date:'Jan 15, 2024',title:'Host a Static Website on AWS S3 for Free',desc:'Step-by-step guide to deploy your site on S3 with CloudFront CDN and custom domain in under 20 minutes.'},
+  {tags:['Docker','CI/CD'],date:'Jan 22, 2024',title:'Docker + GitHub Actions: CI/CD Pipeline in 15 Min',desc:'Build a complete pipeline — from code push to production — with Docker and GitHub Actions.'},
+  {tags:['Kubernetes'],date:'Feb 12, 2024',title:'Kubernetes for Beginners: Pods, Deployments & Services',desc:'Understand core Kubernetes concepts with real YAML examples you can run locally with minikube.'},
+  {tags:['AWS','Lambda'],date:'Feb 20, 2024',title:'AWS Lambda + API Gateway: Serverless REST API',desc:'Go serverless — build and deploy a REST API with zero server management using Lambda.'},
+  {tags:['Terraform'],date:'Feb 1, 2024',title:'Terraform Basics: Provision AWS Infrastructure as Code',desc:'Define EC2, S3, VPC in code. Version, review, and deploy infrastructure like software.'},
+  {tags:['Linux','Shell'],date:'Mar 1, 2024',title:'10 Shell Scripts Every DevOps Engineer Must Know',desc:'Automate backups, monitor disk usage, and manage processes with these essential Bash scripts.'},
+];
+
+document.getElementById('tickerTrack').innerHTML=[...tickerItems,...tickerItems]
+  .map(t=>`<span><i class="${t.icon}" style="color:${t.col}"></i> ${t.name}</span>`).join('');
+
+function buildRow(id,tools){
+  document.getElementById(id).innerHTML=tools.map(t=>`
+    <div class="tsc" style="--tc:${t.col}">
+      <div class="tsc-icon" style="background:${t.col}1a;border:1.5px solid ${t.col}35;color:${t.col}"><i class="${t.icon}"></i></div>
+      <div class="tsc-name">${t.name}</div>
+      <div class="tsc-desc">${t.desc}</div>
+    </div>`).join('');
+}
+buildRow('awsRow',awsTools);
+buildRow('devopsRow',devopsTools);
+
+document.getElementById('postsGrid').innerHTML=posts.map((p,i)=>`
+  <article class="post-card" style="animation-delay:${i*0.06}s">
+    <div class="card-meta">
+      ${p.tags.map(t=>`<span class="tag-pill">${t}</span>`).join('')}
+      <span class="card-date">${p.date}</span>
+    </div>
+    <h3>${p.title}</h3>
+    <p>${p.desc}</p>
+    <div class="read-link">Read More →</div>
+  </article>`).join('');
+</script>
+</body>
+</html>

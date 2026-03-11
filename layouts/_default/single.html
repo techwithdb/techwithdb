@@ -1,0 +1,111 @@
+{{ define "main" }}
+
+{{ $s := .Section }}
+{{ $badgeMap := dict "aws" "badge-aws" "devops" "badge-devops" "blog" "badge-blog" "interview-questions" "badge-interview" }}
+{{ $badge := index $badgeMap $s | default "badge-blog" }}
+
+<div class="wrap" style="padding-top:0">
+  {{- partial "breadcrumb.html" . -}}
+</div>
+
+<div class="wrap">
+  <div class="article-layout">
+
+    <!-- ── Sidebar ─────────────────────────────── -->
+    <aside class="article-sidebar" aria-label="Article sidebar">
+
+      <!-- TOC -->
+      <div class="toc-box">
+        <h4><i class="fas fa-list-ul" style="color:var(--aws);margin-right:6px"></i>Contents</h4>
+        <div id="toc"></div>
+      </div>
+
+      <!-- Meta card -->
+      <div class="sidebar-card">
+        <div class="sidebar-card-title">Article Info</div>
+        <div style="display:flex;flex-direction:column;gap:8px;font-size:.85rem;color:var(--ink-2)">
+          <span><i class="fas fa-calendar" style="color:var(--aws);width:16px"></i> {{ .Date | time.Format "Jan 2, 2006" }}</span>
+          {{ with .Params.author }}<span><i class="fas fa-user" style="color:var(--aws);width:16px"></i> {{ . }}</span>{{ end }}
+          <span><i class="fas fa-clock" style="color:var(--aws);width:16px"></i> {{ .ReadingTime }} min read</span>
+          {{ with .Params.level }}<span><i class="fas fa-layer-group" style="color:var(--aws);width:16px"></i> {{ . }}</span>{{ end }}
+        </div>
+      </div>
+
+      <!-- Share -->
+      <div class="sidebar-card">
+        <div class="sidebar-card-title">Share this article</div>
+        <div class="share-btns">
+          <a href="https://twitter.com/intent/tweet?text={{ .Title | urlize }}&amp;url={{ .Permalink }}" target="_blank" rel="noopener" aria-label="Share on Twitter"><i class="fab fa-twitter"></i></a>
+          <a href="https://www.linkedin.com/sharing/share-offsite/?url={{ .Permalink }}" target="_blank" rel="noopener" aria-label="Share on LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+          <button onclick="navigator.clipboard.writeText(location.href);this.innerHTML='<i class=\'fas fa-check\'></i>';setTimeout(()=>this.innerHTML='<i class=\'fas fa-link\'></i>',2000)" aria-label="Copy link"><i class="fas fa-link"></i></button>
+        </div>
+      </div>
+
+    </aside>
+
+    <!-- ── Article ─────────────────────────────── -->
+    <article>
+
+      <header class="art-header">
+        <div class="art-badges">
+          <span class="badge {{ $badge }}">{{ $s | humanize | title }}</span>
+          {{ with .Params.level }}<span class="badge" style="background:var(--surface-2);color:var(--ink-3);border:1px solid var(--border)">{{ . }}</span>{{ end }}
+          {{ with .Params.series }}<span class="badge badge-devops"><i class="fas fa-layer-group"></i> {{ . }}</span>{{ end }}
+        </div>
+        <h1 class="art-title">{{ .Title }}</h1>
+        {{ with .Description }}<p class="art-desc">{{ . }}</p>{{ end }}
+        <div class="art-meta">
+          <span><i class="fas fa-calendar"></i>{{ .Date | time.Format "January 2, 2006" }}</span>
+          <span><i class="fas fa-clock"></i>{{ .ReadingTime }} min read</span>
+          {{ with .Params.author }}<span><i class="fas fa-user"></i>{{ . }}</span>{{ end }}
+        </div>
+        {{ with .Params.tags }}
+        <div class="art-tags">
+          {{ range . }}<a href="{{ "/tags/" | relURL }}{{ . | urlize }}/" class="art-tag">{{ . }}</a>{{ end }}
+        </div>
+        {{ end }}
+      </header>
+
+      <!-- Content -->
+      <div class="prose">
+        {{ .Content }}
+      </div>
+
+      <!-- Google Form CTA -->
+      {{- partial "form-cta.html" . -}}
+
+      <!-- Prev / Next -->
+      <nav class="art-nav" style="display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-top:2rem">
+        {{ with .PrevInSection }}
+        <a href="{{ .Permalink }}" style="background:var(--surface);border:1px solid var(--border);border-radius:var(--r-lg);padding:16px 18px;text-decoration:none;color:inherit;transition:var(--t)"
+           onmouseover="this.style.borderColor='var(--aws)'" onmouseout="this.style.borderColor='var(--border)'">
+          <div style="font-size:.74rem;color:var(--ink-4);margin-bottom:5px"><i class="fas fa-arrow-left"></i> Previous</div>
+          <div style="font-weight:700;font-size:.9rem;font-family:var(--font-display)">{{ .Title | truncate 55 }}</div>
+        </a>
+        {{ else }}<div></div>{{ end }}
+
+        {{ with .NextInSection }}
+        <a href="{{ .Permalink }}" style="background:var(--surface);border:1px solid var(--border);border-radius:var(--r-lg);padding:16px 18px;text-decoration:none;color:inherit;transition:var(--t);text-align:right"
+           onmouseover="this.style.borderColor='var(--aws)'" onmouseout="this.style.borderColor='var(--border)'">
+          <div style="font-size:.74rem;color:var(--ink-4);margin-bottom:5px">Next <i class="fas fa-arrow-right"></i></div>
+          <div style="font-weight:700;font-size:.9rem;font-family:var(--font-display)">{{ .Title | truncate 55 }}</div>
+        </a>
+        {{ else }}<div></div>{{ end }}
+      </nav>
+
+      <!-- Related posts -->
+      {{ $related := .Site.RegularPages.Related . | first 3 }}
+      {{ if $related }}
+      <div class="related-posts" style="margin-top:3rem">
+        <h3 style="margin-bottom:1.25rem">Related Articles</h3>
+        <div class="post-grid">
+          {{ range $related }}{{ partial "post-card.html" . }}{{ end }}
+        </div>
+      </div>
+      {{ end }}
+
+    </article>
+  </div>
+</div>
+
+{{ end }}

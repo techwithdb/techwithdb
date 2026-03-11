@@ -1,0 +1,14 @@
+{{ $title  := .title  | default "Found an error or want to suggest a topic?" }}
+{{ $body   := .body   | default "Help us improve! Submit feedback, report mistakes, or request new tutorials via our Google Form." }}
+{{ $icon   := .icon   | default "fab fa-google" }}
+
+<div class="form-cta">
+  <div class="form-cta-ico"><i class="{{ $icon }}"></i></div>
+  <div>
+    <h3>{{ $title }}</h3>
+    <p>{{ $body }}</p>
+    <a href="{{ $.Site.Params.googleFormURL }}" target="_blank" rel="noopener" class="btn btn-primary">
+      <i class="fab fa-google"></i> Open Google Form
+    </a>
+  </div>
+</div>

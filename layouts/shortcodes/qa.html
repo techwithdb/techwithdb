@@ -1,0 +1,17 @@
+{{ $q   := .Get "q" }}
+{{ $num := .Get "num"   | default "" }}
+{{ $lvl := .Get "level" | default "basic" }}
+
+<div class="qa-item" data-level="{{ $lvl }}" role="region">
+  <div class="qa-q" role="button" tabindex="0" aria-expanded="false">
+    {{ if $num }}<div class="qa-num">Q{{ $num }}</div>{{ end }}
+    <div class="qa-text">{{ $q }}</div>
+    <span class="qa-lvl {{ $lvl }}">{{ $lvl | title }}</span>
+    <div class="qa-toggle" aria-hidden="true"><i class="fas fa-plus"></i></div>
+  </div>
+  <div class="qa-ans">
+    <div class="qa-ans-inner">
+      {{ .Inner | markdownify }}
+    </div>
+  </div>
+</div>

@@ -1,0 +1,223 @@
+{{ define "main" }}
+
+<!-- ── HERO: centered, no orbit ─────────────────────────────── -->
+<section class="hero">
+  <div class="hero-inner">
+    <div class="hero-badge">☁️ AWS &amp; DevOps Blog</div>
+    <h1>Level Up Your<br><em>Cloud &amp; DevOps</em> Skills</h1>
+    <p>Practical tutorials, real-world projects, and deep dives into AWS, Kubernetes, Terraform, CI/CD and more — by DB.</p>
+    <div class="hero-btns">
+      <a href="{{ "/aws/" | relURL }}" class="btn btn-primary">Read Articles</a>
+      <a href="{{ "/interview-questions/" | relURL }}" class="btn btn-outline">Interview Prep</a>
+    </div>
+    <div class="hero-chips">
+      <span class="chip">AWS</span>
+      <span class="chip">Terraform</span>
+      <span class="chip">Kubernetes</span>
+      <span class="chip">Docker</span>
+      <span class="chip">CI/CD</span>
+      <span class="chip">GitHub Actions</span>
+    </div>
+  </div>
+</section>
+
+<!-- ── TICKER ────────────────────────────────────────────────── -->
+<div class="ticker-wrap">
+  <div class="ticker-track" id="tickerTrack"></div>
+</div>
+
+<!-- ── STATS ─────────────────────────────────────────────────── -->
+<div class="stats-bar">
+  <div class="stats-inner">
+    <div class="stat"><div class="stat-num s-purple">50+</div><div class="stat-label">Articles</div></div>
+    <div class="stat"><div class="stat-num s-orange">10</div><div class="stat-label">AWS Services</div></div>
+    <div class="stat"><div class="stat-num s-green">200+</div><div class="stat-label">Interview Q&amp;As</div></div>
+    <div class="stat"><div class="stat-num s-blue">100%</div><div class="stat-label">Free</div></div>
+  </div>
+</div>
+
+<!-- ── TECH SHOWCASE ──────────────────────────────────────────── -->
+<section class="tech-showcase">
+  <div class="container">
+    <div class="section-head">
+      <h2>Everything You'll Master</h2>
+      <a href="{{ "/aws/" | relURL }}" class="view-all">Start Learning →</a>
+    </div>
+    <div class="tech-row">
+      <div class="tech-row-label"><i class="fab fa-aws"></i> AWS Services</div>
+      <div class="tech-cards-scroll" id="awsRow"></div>
+    </div>
+    <div class="tech-row">
+      <div class="tech-row-label"><i class="fas fa-infinity"></i> DevOps Tools</div>
+      <div class="tech-cards-scroll" id="devopsRow"></div>
+    </div>
+  </div>
+</section>
+
+<!-- ── LATEST ARTICLES ────────────────────────────────────────── -->
+{{ $recent := site.RegularPages.ByDate.Reverse | first 6 }}
+{{ if $recent }}
+<section class="posts-section">
+  <div class="container">
+    <div class="section-head">
+      <h2>Latest Articles</h2>
+      <a href="{{ "/blog/" | relURL }}" class="view-all">View All →</a>
+    </div>
+    <div class="posts-grid">
+      {{ range $recent }}
+      <article class="post-card" onclick="location.href='{{ .Permalink }}'">
+        <div class="card-meta">
+          {{ with .Params.tags }}{{ range first 2 . }}<span class="tag-pill">{{ . | title }}</span>{{ end }}{{ end }}
+          <span class="card-date">{{ .Date | time.Format "Jan 2, 2006" }}</span>
+        </div>
+        <h3>{{ .Title }}</h3>
+        <p>{{ .Summary | plainify | truncate 120 }}</p>
+        <div class="read-link">Read More →</div>
+      </article>
+      {{ end }}
+    </div>
+  </div>
+</section>
+{{ else }}
+<section class="posts-section">
+  <div class="container">
+    <div class="section-head">
+      <h2>Latest Articles</h2>
+      <a href="{{ "/blog/" | relURL }}" class="view-all">View All →</a>
+    </div>
+    <div class="posts-grid">
+      {{ $ph := slice
+        (dict "tags" (slice "AWS" "S3")       "date" "Jan 15, 2024" "title" "Host a Static Website on AWS S3 for Free"              "desc" "Step-by-step guide to deploy your site on S3 with CloudFront CDN and custom domain in under 20 minutes."  "url" "/aws/s3/")
+        (dict "tags" (slice "Docker" "CI/CD") "date" "Jan 22, 2024" "title" "Docker + GitHub Actions: CI/CD Pipeline in 15 Minutes" "desc" "Build a complete pipeline — from code push to production — with Docker and GitHub Actions."                   "url" "/devops/docker/")
+        (dict "tags" (slice "Kubernetes")     "date" "Feb 12, 2024" "title" "Kubernetes for Beginners: Pods, Deployments &amp; Services" "desc" "Understand core Kubernetes concepts with real YAML examples you can run locally with minikube."          "url" "/devops/kubernetes/")
+        (dict "tags" (slice "AWS" "Lambda")   "date" "Feb 20, 2024" "title" "AWS Lambda + API Gateway: Serverless REST API"         "desc" "Go serverless — build and deploy a REST API with zero server management using Lambda and API Gateway."       "url" "/aws/lambda/")
+        (dict "tags" (slice "Terraform")      "date" "Feb 1, 2024"  "title" "Terraform Basics: Provision AWS Infrastructure as Code" "desc" "Define EC2, S3, VPC in code. Version, review, and deploy infrastructure like software."                    "url" "/aws/")
+        (dict "tags" (slice "Linux" "Shell")  "date" "Mar 1, 2024"  "title" "10 Shell Scripts Every DevOps Engineer Must Know"      "desc" "Automate backups, monitor disk usage, and manage processes with these essential Bash scripts."               "url" "/blog/")
+      }}
+      {{ range $ph }}
+      <article class="post-card" onclick="location.href='{{ .url | relURL }}'">
+        <div class="card-meta">
+          {{ range .tags }}<span class="tag-pill">{{ . | safeHTML }}</span>{{ end }}
+          <span class="card-date">{{ .date }}</span>
+        </div>
+        <h3>{{ .title | safeHTML }}</h3>
+        <p>{{ .desc }}</p>
+        <div class="read-link">Read More →</div>
+      </article>
+      {{ end }}
+    </div>
+  </div>
+</section>
+{{ end }}
+
+<!-- ── FEATURED BAND ─────────────────────────────────────────── -->
+<section class="featured-band">
+  <div class="featured-inner">
+    <div class="featured-text">
+      <h2>🚀 Deploy Hugo to GitHub Pages in Minutes</h2>
+      <p>Push your markdown files and let GitHub Actions handle the build and deployment automatically — for free.</p>
+      <a href="{{ .Site.Params.googleFormURL }}" target="_blank" rel="noopener" class="btn btn-primary">Submit a Question</a>
+    </div>
+    <div class="featured-code">
+      <span class="code-line"><span class="c-comment"># .github/workflows/deploy.yml</span></span>
+      <span class="code-line"><span class="c-key">name</span>: <span class="c-str">Deploy to GitHub Pages</span></span>
+      <span class="code-line"> </span>
+      <span class="code-line"><span class="c-key">on</span>:</span>
+      <span class="code-line">  <span class="c-key">push</span>:</span>
+      <span class="code-line">    <span class="c-key">branches</span>: [<span class="c-str">main</span>]</span>
+      <span class="code-line"> </span>
+      <span class="code-line"><span class="c-key">jobs</span>:</span>
+      <span class="code-line">  <span class="c-yellow">build</span>:</span>
+      <span class="code-line">    <span class="c-key">runs-on</span>: <span class="c-str">ubuntu-latest</span></span>
+      <span class="code-line">    <span class="c-key">steps</span>:</span>
+      <span class="code-line">      <span class="c-cyan">- uses</span>: actions/checkout@v4</span>
+      <span class="code-line">      <span class="c-cyan">- name</span>: <span class="c-str">Build Hugo</span></span>
+      <span class="code-line">        <span class="c-key">run</span>: hugo --minify</span>
+    </div>
+  </div>
+</section>
+
+<!-- ── INTERVIEW CTA ──────────────────────────────────────────── -->
+<section style="padding:64px 0">
+  <div class="container">
+    <div class="form-banner">
+      <div class="form-banner-inner">
+        <h2>Ace Your Cloud &amp; DevOps Interviews</h2>
+        <p>200+ curated questions for AWS, Docker, Kubernetes, Jenkins, Prometheus &amp; Grafana — Basic to Advanced.</p>
+        <div style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap">
+          <a href="{{ "/interview-questions/" | relURL }}" class="btn btn-primary">Browse Questions</a>
+          <a href="{{ .Site.Params.googleFormURL }}" target="_blank" rel="noopener" class="btn btn-ghost">Submit a Question</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── TICKER + TECH ROWS JS ──────────────────────────────────── -->
+<script>
+(function(){
+  var awsTools = [
+    { name:'EC2',            desc:'Virtual Compute', icon:'fas fa-server',        col:'#FF9900' },
+    { name:'S3',             desc:'Object Storage',  icon:'fas fa-database',      col:'#FF9900' },
+    { name:'Lambda',         desc:'Serverless',      icon:'fas fa-bolt',          col:'#FF9900' },
+    { name:'VPC',            desc:'Networking',      icon:'fas fa-network-wired', col:'#FF9900' },
+    { name:'RDS',            desc:'Managed DB',      icon:'fas fa-database',      col:'#3B82F6' },
+    { name:'EKS',            desc:'Managed K8s',     icon:'fas fa-dharmachakra',  col:'#FF9900' },
+    { name:'IAM',            desc:'Access Control',  icon:'fas fa-shield-halved', col:'#FF4444' },
+    { name:'CloudFormation', desc:'IaC Templates',   icon:'fas fa-layer-group',   col:'#FF9900' },
+    { name:'Route 53',       desc:'DNS Service',     icon:'fas fa-route',         col:'#FF9900' },
+    { name:'CloudWatch',     desc:'Monitoring',      icon:'fas fa-chart-line',    col:'#FF9900' },
+  ];
+  var devopsTools = [
+    { name:'Docker',         desc:'Containers',      icon:'fab fa-docker',        col:'#2496ED' },
+    { name:'Kubernetes',     desc:'Orchestration',   icon:'fas fa-dharmachakra',  col:'#326CE5' },
+    { name:'Jenkins',        desc:'CI/CD Pipelines', icon:'fas fa-gears',         col:'#D33833' },
+    { name:'GitHub Actions', desc:'Automation',      icon:'fab fa-github',        col:'#00c8ff' },
+    { name:'Prometheus',     desc:'Metrics',         icon:'fas fa-fire',          col:'#E6522C' },
+    { name:'Grafana',        desc:'Dashboards',      icon:'fas fa-chart-bar',     col:'#F46800' },
+    { name:'Terraform',      desc:'Infrastructure',  icon:'fas fa-cube',          col:'#9580FF' },
+    { name:'Ansible',        desc:'Configuration',   icon:'fas fa-sliders',       col:'#EE0000' },
+  ];
+  var tickerItems = [
+    {icon:'fab fa-aws',name:'AWS'},{icon:'fab fa-docker',name:'Docker'},
+    {icon:'fas fa-dharmachakra',name:'Kubernetes'},{icon:'fas fa-gears',name:'Jenkins'},
+    {icon:'fab fa-github',name:'GitHub Actions'},{icon:'fas fa-fire',name:'Prometheus'},
+    {icon:'fas fa-chart-bar',name:'Grafana'},{icon:'fas fa-cube',name:'Terraform'},
+    {icon:'fas fa-bolt',name:'Lambda'},{icon:'fas fa-server',name:'EC2'},
+    {icon:'fas fa-shield-halved',name:'IAM'},{icon:'fas fa-network-wired',name:'VPC'},
+    {icon:'fab fa-linux',name:'Linux'},{icon:'fas fa-layer-group',name:'CloudFormation'},
+    {icon:'fas fa-chart-line',name:'CloudWatch'},{icon:'fas fa-database',name:'RDS'},
+  ];
+
+  function buildTicker() {
+    var track = document.getElementById('tickerTrack');
+    if (!track) return;
+    var items = tickerItems.concat(tickerItems);
+    track.innerHTML = items.map(function(t){
+      return '<span><i class="' + t.icon + '"></i> ' + t.name + '</span>';
+    }).join('');
+  }
+
+  function buildTechRow(id, tools) {
+    var c = document.getElementById(id);
+    if (!c) return;
+    c.innerHTML = tools.map(function(t){
+      return '<a href="#" class="tsc" style="--tc:' + t.col + '">' +
+        '<div class="tsc-icon" style="background:' + t.col + '18;border:1px solid ' + t.col + '30;color:' + t.col + '">' +
+          '<i class="' + t.icon + '"></i>' +
+        '</div>' +
+        '<div class="tsc-name">' + t.name + '</div>' +
+        '<div class="tsc-desc">' + t.desc + '</div>' +
+      '</a>';
+    }).join('');
+  }
+
+  document.addEventListener('DOMContentLoaded', function(){
+    buildTicker();
+    buildTechRow('awsRow', awsTools);
+    buildTechRow('devopsRow', devopsTools);
+  });
+})();
+</script>
+
+{{ end }}

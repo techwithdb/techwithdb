@@ -1,0 +1,22 @@
+{{/* Reusable post card partial — works for any section */}}
+{{ $s := .Section }}
+{{ $stripeMap := dict "aws" "aws" "devops" "devops" "blog" "blog" "interview-questions" "interview" }}
+{{ $stripe := index $stripeMap $s | default "blog" }}
+{{ $badgeMap := dict "aws" "badge-aws" "devops" "badge-devops" "blog" "badge-blog" "interview-questions" "badge-interview" }}
+{{ $badge := index $badgeMap $s | default "badge-blog" }}
+
+<article class="post-card">
+  <div class="pc-stripe {{ $stripe }}"></div>
+  <div class="pc-body">
+    <div class="pc-meta">
+      <span class="badge {{ $badge }}">{{ $s | humanize | title }}</span>
+      {{ with .Params.level }}<span class="badge" style="background:var(--surface-2);color:var(--ink-3);border:1px solid var(--border)">{{ . }}</span>{{ end }}
+    </div>
+    <h3 class="pc-title"><a href="{{ .Permalink }}">{{ .Title }}</a></h3>
+    <p class="pc-excerpt">{{ .Summary | plainify | truncate 140 }}</p>
+  </div>
+  <div class="pc-foot">
+    <span><i class="fas fa-calendar-alt" style="margin-right:4px"></i>{{ .Date | time.Format "Jan 2, 2006" }}</span>
+    <a href="{{ .Permalink }}" class="pc-foot-link">Read more <i class="fas fa-arrow-right"></i></a>
+  </div>
+</article>

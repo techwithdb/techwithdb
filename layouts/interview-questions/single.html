@@ -1,0 +1,55 @@
+{{ define "main" }}
+
+<div class="wrap">
+  {{- partial "breadcrumb.html" . -}}
+
+  <div style="max-width:860px;margin:0 auto;padding:1.5rem 0 4rem">
+
+    <!-- Page header -->
+    <header style="background:var(--surface);border:1px solid var(--border);border-radius:var(--r-xl);padding:2rem 2.5rem;margin-bottom:2rem">
+      <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:1rem">
+        <span class="badge badge-interview"><i class="fas fa-comments"></i> Interview Q&amp;A</span>
+        {{ with .Params.level }}<span class="badge" style="background:var(--surface-2);color:var(--ink-3);border:1px solid var(--border)">{{ . }}</span>{{ end }}
+        {{ with .Params.tool }}<span class="badge badge-{{ . }}">{{ . | title }}</span>{{ end }}
+      </div>
+      <h1 style="font-size:clamp(1.5rem,3vw,2.1rem);margin-bottom:.75rem">{{ .Title }}</h1>
+      {{ with .Description }}<p style="color:var(--ink-2);font-size:1.05rem;margin:0">{{ . }}</p>{{ end }}
+      <div style="display:flex;gap:18px;margin-top:1.25rem;font-size:.84rem;color:var(--ink-4);flex-wrap:wrap">
+        <span><i class="fas fa-calendar"></i> {{ .Date | time.Format "January 2, 2006" }}</span>
+        {{ with .Params.question_count }}<span><i class="fas fa-question-circle"></i> {{ . }} Questions</span>{{ end }}
+        <span><i class="fas fa-clock"></i> {{ .ReadingTime }} min read</span>
+      </div>
+    </header>
+
+    <!-- Controls bar -->
+    <div class="qa-controls">
+      <div class="filter-pills">
+        <span style="font-size:.79rem;font-weight:700;color:var(--ink-4)">Level:</span>
+        <button class="pill active" data-level="all">All</button>
+        <button class="pill pill-basic"    data-level="basic">🟢 Basic</button>
+        <button class="pill pill-inter"    data-level="intermediate">🟡 Intermediate</button>
+        <button class="pill pill-advanced" data-level="advanced">🔴 Advanced</button>
+      </div>
+      <div style="display:flex;gap:8px">
+        <button id="expandAll"   class="btn btn-ghost btn-sm"><i class="fas fa-plus"></i> Expand All</button>
+        <button id="collapseAll" class="btn btn-ghost btn-sm"><i class="fas fa-minus"></i> Collapse</button>
+      </div>
+    </div>
+
+    <!-- Q&A content rendered via qa shortcodes in markdown -->
+    <div class="prose">
+      {{ .Content }}
+    </div>
+
+    <!-- Submit CTA -->
+    {{- partial "form-cta.html" (dict
+      "title" "Add More Questions to This Guide"
+      "body"  "Know questions that should be here? Share them and help the community!"
+      "icon"  "fas fa-plus-circle"
+      "Site"  .Site
+    ) -}}
+
+  </div>
+</div>
+
+{{ end }}

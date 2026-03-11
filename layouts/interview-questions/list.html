@@ -1,0 +1,107 @@
+{{ define "main" }}
+
+<!-- Hero -->
+<section class="interview-hero">
+  <div class="wrap">
+    {{- partial "breadcrumb.html" . -}}
+    <div class="cat-icon interview"><i class="fas fa-comments"></i></div>
+    <h1>Interview Questions &amp; Answers</h1>
+    <p style="max-width:600px;color:var(--ink-2);font-size:1.05rem;margin:.75rem 0 1.5rem">
+      Curated Q&amp;A for AWS and DevOps interviews. Basic to Advanced — with detailed, code-rich answers.
+    </p>
+    <div style="display:flex;gap:12px;flex-wrap:wrap;align-items:center">
+      <span style="font-size:.86rem;color:var(--ink-3)"><i class="fas fa-question-circle"></i> {{ len .Pages }} question sets</span>
+      <a href="{{ .Site.Params.googleFormURL }}" target="_blank" rel="noopener" class="btn btn-primary btn-sm">
+        <i class="fab fa-google"></i> Submit Questions
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- AWS Interview Q&A -->
+<section class="sec sec-alt">
+  <div class="wrap">
+    <div class="sec-hd">
+      <span class="sec-eye"><i class="fab fa-aws"></i> AWS</span>
+      <h2 class="sec-title">AWS Interview Questions</h2>
+    </div>
+    <div class="service-grid">
+      {{ $topics := slice
+        (dict "name" "EC2"            "icon" "fas fa-server"        "url" "/interview-questions/aws/ec2-interview-questions/")
+        (dict "name" "S3"             "icon" "fas fa-database"       "url" "/interview-questions/aws/s3-interview-questions/")
+        (dict "name" "VPC"            "icon" "fas fa-network-wired"  "url" "/interview-questions/aws/vpc-interview-questions/")
+        (dict "name" "Lambda"         "icon" "fas fa-bolt"           "url" "/interview-questions/aws/lambda-interview-questions/")
+        (dict "name" "EKS"            "icon" "fas fa-dharmachakra"   "url" "/interview-questions/aws/eks-interview-questions/")
+        (dict "name" "IAM"            "icon" "fas fa-shield-halved"  "url" "/interview-questions/aws/iam-interview-questions/")
+      }}
+      {{ range $topics }}
+      <a href="{{ .url | relURL }}" class="svc-card">
+        <div class="svc-icon"><i class="{{ .icon }}"></i></div>
+        <div>
+          <div class="svc-name">{{ .name }}</div>
+          <div class="svc-count">Interview Q&amp;A</div>
+        </div>
+      </a>
+      {{ end }}
+    </div>
+  </div>
+</section>
+
+<!-- DevOps Interview Q&A -->
+<section class="sec">
+  <div class="wrap">
+    <div class="sec-hd">
+      <span class="sec-eye"><i class="fas fa-infinity"></i> DevOps</span>
+      <h2 class="sec-title">DevOps Interview Questions</h2>
+    </div>
+    <div class="service-grid">
+      {{ $devops := slice
+        (dict "name" "Docker"         "icon" "fab fa-docker"       "cls" "docker"     "url" "/interview-questions/devops/docker-interview-questions/")
+        (dict "name" "Kubernetes"     "icon" "fas fa-dharmachakra" "cls" "k8s"        "url" "/interview-questions/devops/kubernetes-interview-questions/")
+        (dict "name" "Jenkins"        "icon" "fas fa-gears"        "cls" "jenkins"    "url" "/interview-questions/devops/jenkins-interview-questions/")
+        (dict "name" "GitHub Actions" "icon" "fab fa-github"       "cls" "github-act" "url" "/interview-questions/devops/github-actions-interview-questions/")
+        (dict "name" "Prometheus"     "icon" "fas fa-fire"         "cls" "prometheus" "url" "/interview-questions/devops/prometheus-interview-questions/")
+        (dict "name" "Grafana"        "icon" "fas fa-chart-bar"    "cls" "grafana"    "url" "/interview-questions/devops/grafana-interview-questions/")
+      }}
+      {{ range $devops }}
+      <a href="{{ .url | relURL }}" class="svc-card">
+        <div class="svc-icon {{ .cls }}"><i class="{{ .icon }}"></i></div>
+        <div>
+          <div class="svc-name">{{ .name }}</div>
+          <div class="svc-count">Interview Q&amp;A</div>
+        </div>
+      </a>
+      {{ end }}
+    </div>
+  </div>
+</section>
+
+<!-- All Q&A posts listing -->
+{{ if .Pages }}
+<section class="sec sec-alt">
+  <div class="wrap">
+    <div class="sec-hd">
+      <span class="sec-eye">All Question Sets</span>
+      <h2 class="sec-title">Browse All Interview Guides</h2>
+    </div>
+    <div class="post-grid">
+      {{ range .Pages.ByDate.Reverse }}{{ partial "post-card.html" . }}{{ end }}
+    </div>
+  </div>
+</section>
+{{ end }}
+
+<!-- Submit CTA -->
+<section class="sec">
+  <div class="wrap">
+    <div class="form-banner">
+      <h2>Contribute Interview Questions</h2>
+      <p>Interviewed recently? Help the community by sharing questions you were asked. We review and publish all quality submissions.</p>
+      <a href="{{ .Site.Params.googleFormURL }}" target="_blank" rel="noopener" class="btn btn-xl" style="background:#fff;color:var(--aws);font-weight:700">
+        <i class="fab fa-google"></i> Submit via Google Form
+      </a>
+    </div>
+  </div>
+</section>
+
+{{ end }}

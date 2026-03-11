@@ -1,0 +1,78 @@
+name: 🚀 Build & Deploy to GitHub Pages
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+# Grant write access to deploy
+permissions:
+  contents: read
+  pages:    write
+  id-token: write
+
+concurrency:
+  group:              "pages"
+  cancel-in-progress: false
+
+jobs:
+  # ── Build ──────────────────────────────────────────────────
+  build:
+    name: Build Hugo Site
+    runs-on: ubuntu-latest
+    steps:
+
+      - name: 📥 Checkout (full history for lastmod)
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: ⚡ Setup Hugo (extended)
+        uses: peaceiris/actions-hugo@v3
+        with:
+          hugo-version: '0.128.0'
+          extended: true
+
+      - name: 🔧 Setup GitHub Pages
+        id: pages
+        uses: actions/configure-pages@v4
+
+      - name: 💾 Cache Hugo modules
+        uses: actions/cache@v4
+        with:
+          path: /tmp/hugo_cache
+          key: ${{ runner.os }}-hugo-${{ hashFiles('**/go.sum') }}
+          restore-keys: ${{ runner.os }}-hugo-
+
+      - name: 🏗 Build site
+        env:
+          HUGO_ENVIRONMENT: production
+          HUGO_ENV:         production
+        run: |
+          hugo \
+            --minify \
+            --gc \
+            --baseURL "${{ steps.pages.outputs.base_url }}/" \
+            --cacheDir /tmp/hugo_cache \
+            --logLevel info
+
+      - name: 📦 Upload artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: ./public
+
+  # ── Deploy (main branch only) ──────────────────────────────
+  deploy:
+    name: Deploy to GitHub Pages
+    needs: build
+    runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/main' && github.event_name != 'pull_request'
+    environment:
+      name: github-pages
+      url:  ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: 🌐 Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4

@@ -1,0 +1,13 @@
+{{ $type  := .Get "type"  | default "info" }}
+{{ $title := .Get "title" }}
+{{ $icons := dict "tip" "fa-lightbulb" "warn" "fa-triangle-exclamation" "danger" "fa-circle-exclamation" "info" "fa-circle-info" "aws" "fa-aws" }}
+{{ $icon  := index $icons $type | default "fa-circle-info" }}
+{{ $fab   := cond (eq $type "aws") "fab" "fas" }}
+
+<div class="callout {{ $type }}" role="note">
+  <i class="{{ $fab }} {{ $icon }} callout-ico"></i>
+  <div>
+    {{ if $title }}<div class="callout-label">{{ $title }}</div>{{ end }}
+    {{ .Inner | markdownify }}
+  </div>
+</div>

@@ -1,0 +1,14 @@
+<nav class="breadcrumb" aria-label="Breadcrumb">
+  <a href="{{ "/" | relURL }}">Home</a>
+  {{ $sections := .Ancestors.Reverse }}
+  {{ range $sections }}
+    {{ if not .IsHome }}
+      <span class="breadcrumb-sep"><i class="fas fa-chevron-right"></i></span>
+      <a href="{{ .Permalink }}">{{ .Title }}</a>
+    {{ end }}
+  {{ end }}
+  {{ if not .IsSection }}
+    <span class="breadcrumb-sep"><i class="fas fa-chevron-right"></i></span>
+    <span aria-current="page">{{ .Title | truncate 50 }}</span>
+  {{ end }}
+</nav>
