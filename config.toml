@@ -43,7 +43,7 @@ copyright = "© 2025 TechWithDB. All rights reserved."
 
   [[menu.main]]
     name   = "AWS"
-    url    = "aws/"
+    url    = "/aws/"
     weight = 2
     [menu.main.params]
       icon   = "fab fa-aws"
@@ -51,7 +51,7 @@ copyright = "© 2025 TechWithDB. All rights reserved."
 
   [[menu.main]]
     name   = "DevOps"
-    url    = "devops/"
+    url    = "/devops/"
     weight = 3
     [menu.main.params]
       icon   = "fas fa-infinity"
@@ -59,21 +59,21 @@ copyright = "© 2025 TechWithDB. All rights reserved."
 
   [[menu.main]]
     name   = "Interview Q&A"
-    url    = "interview-questions/"
+    url    = "/interview-questions/"
     weight = 4
     [menu.main.params]
       icon = "fas fa-comments"
 
   [[menu.main]]
     name   = "Blog"
-    url    = "blog/"
+    url    = "/blog/"
     weight = 5
     [menu.main.params]
       icon = "fas fa-pen-nib"
 
   [[menu.main]]
     name   = "Contact"
-    url    = "contact/"
+    url    = "/contact/"
     weight = 6
     [menu.main.params]
       icon = "fas fa-envelope"
