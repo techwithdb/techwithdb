@@ -1,27 +1,45 @@
 {{ define "main" }}
 
-<!-- ── HERO: centered, no orbit ─────────────────────────────── -->
-<section class="hero">
-  <div class="hero-inner">
-    <div class="hero-badge">☁️ AWS &amp; DevOps Blog</div>
-    <h1>Level Up Your<br><em>Cloud &amp; DevOps</em> Skills</h1>
-    <p>Practical tutorials, real-world projects, and deep dives into AWS, Kubernetes, Terraform, CI/CD and more — by DB.</p>
-    <div class="hero-btns">
-      <a href="{{ "/aws/" | relURL }}" class="btn btn-primary">Read Articles</a>
-      <a href="{{ "/interview-questions/" | relURL }}" class="btn btn-outline">Interview Prep</a>
+<!-- ── HERO: split layout with animated orbit ───────────────── -->
+<section class="hero hero-split">
+  <div class="hero-split-inner">
+
+    <!-- Left: copy -->
+    <div class="hero-copy">
+      <div class="hero-badge">☁️ AWS &amp; DevOps Blog</div>
+      <h1>Level Up Your<br><em>Cloud &amp; DevOps</em> Skills</h1>
+      <p>Practical tutorials, real-world projects, and deep dives into AWS, Kubernetes, Terraform, CI/CD and more — by DB.</p>
+      <div class="hero-btns">
+        <a href="{{ "/aws/" | absURL }}" class="btn btn-primary">Read Articles</a>
+        <a href="{{ "/interview-questions/" | absURL }}" class="btn btn-outline">Interview Prep</a>
+      </div>
+      <div class="hero-chips">
+        <span class="chip">AWS</span><span class="chip">Terraform</span>
+        <span class="chip">Kubernetes</span><span class="chip">Docker</span>
+        <span class="chip">CI/CD</span><span class="chip">GitHub Actions</span>
+      </div>
     </div>
-    <div class="hero-chips">
-      <span class="chip">AWS</span>
-      <span class="chip">Terraform</span>
-      <span class="chip">Kubernetes</span>
-      <span class="chip">Docker</span>
-      <span class="chip">CI/CD</span>
-      <span class="chip">GitHub Actions</span>
+
+    <!-- Right: orbit canvas (built by JS) -->
+    <div class="orbit-wrap" aria-hidden="true">
+      <div class="orbit-scene" id="orbitScene">
+        <div class="ring ring1" id="r1"></div>
+        <div class="ring ring2" id="r2"></div>
+        <div class="ring ring3" id="r3"></div>
+        <div class="orbit-core">
+          <div class="core-pulse"></div>
+          <div class="core-ring1"></div>
+          <div class="core-ring2"></div>
+          <i class="fab fa-aws core-icon"></i>
+        </div>
+        <div class="orbit-particles" id="orbitParticles"></div>
+      </div>
     </div>
+
   </div>
 </section>
 
-<!-- ── TICKER ────────────────────────────────────────────────── -->
+<!-- ── TICKER: infinite scrolling tool strip ────────────────── -->
 <div class="ticker-wrap">
   <div class="ticker-track" id="tickerTrack"></div>
 </div>
@@ -29,19 +47,19 @@
 <!-- ── STATS ─────────────────────────────────────────────────── -->
 <div class="stats-bar">
   <div class="stats-inner">
-    <div class="stat"><div class="stat-num s-purple">50+</div><div class="stat-label">Articles</div></div>
-    <div class="stat"><div class="stat-num s-orange">10</div><div class="stat-label">AWS Services</div></div>
-    <div class="stat"><div class="stat-num s-green">200+</div><div class="stat-label">Interview Q&amp;As</div></div>
-    <div class="stat"><div class="stat-num s-blue">100%</div><div class="stat-label">Free</div></div>
+    <div class="stat"><div class="stat-num">50+</div><div class="stat-label">Articles</div></div>
+    <div class="stat"><div class="stat-num">10</div><div class="stat-label">AWS Services</div></div>
+    <div class="stat"><div class="stat-num">200+</div><div class="stat-label">Interview Q&amp;As</div></div>
+    <div class="stat"><div class="stat-num">100%</div><div class="stat-label">Free</div></div>
   </div>
 </div>
 
-<!-- ── TECH SHOWCASE ──────────────────────────────────────────── -->
+<!-- ── TECH SHOWCASE: scrollable rows ────────────────────────── -->
 <section class="tech-showcase">
   <div class="container">
     <div class="section-head">
       <h2>Everything You'll Master</h2>
-      <a href="{{ "/aws/" | relURL }}" class="view-all">Start Learning →</a>
+      <a href="{{ "/aws/" | absURL }}" class="view-all">Start Learning →</a>
     </div>
     <div class="tech-row">
       <div class="tech-row-label"><i class="fab fa-aws"></i> AWS Services</div>
@@ -61,7 +79,7 @@
   <div class="container">
     <div class="section-head">
       <h2>Latest Articles</h2>
-      <a href="{{ "/blog/" | relURL }}" class="view-all">View All →</a>
+      <a href="{{ "/blog/" | absURL }}" class="view-all">View All →</a>
     </div>
     <div class="posts-grid">
       {{ range $recent }}
@@ -83,9 +101,9 @@
   <div class="container">
     <div class="section-head">
       <h2>Latest Articles</h2>
-      <a href="{{ "/blog/" | relURL }}" class="view-all">View All →</a>
+      <a href="{{ "/blog/" | absURL }}" class="view-all">View All →</a>
     </div>
-    <div class="posts-grid">
+    <div class="posts-grid" id="postsGrid">
       {{ $ph := slice
         (dict "tags" (slice "AWS" "S3")       "date" "Jan 15, 2024" "title" "Host a Static Website on AWS S3 for Free"              "desc" "Step-by-step guide to deploy your site on S3 with CloudFront CDN and custom domain in under 20 minutes."  "url" "/aws/s3/")
         (dict "tags" (slice "Docker" "CI/CD") "date" "Jan 22, 2024" "title" "Docker + GitHub Actions: CI/CD Pipeline in 15 Minutes" "desc" "Build a complete pipeline — from code push to production — with Docker and GitHub Actions."                   "url" "/devops/docker/")
@@ -95,7 +113,7 @@
         (dict "tags" (slice "Linux" "Shell")  "date" "Mar 1, 2024"  "title" "10 Shell Scripts Every DevOps Engineer Must Know"      "desc" "Automate backups, monitor disk usage, and manage processes with these essential Bash scripts."               "url" "/blog/")
       }}
       {{ range $ph }}
-      <article class="post-card" onclick="location.href='{{ .url | relURL }}'">
+      <article class="post-card" onclick="location.href='{{ .url | absURL }}'">
         <div class="card-meta">
           {{ range .tags }}<span class="tag-pill">{{ . | safeHTML }}</span>{{ end }}
           <span class="card-date">{{ .date }}</span>
@@ -145,7 +163,7 @@
         <h2>Ace Your Cloud &amp; DevOps Interviews</h2>
         <p>200+ curated questions for AWS, Docker, Kubernetes, Jenkins, Prometheus &amp; Grafana — Basic to Advanced.</p>
         <div style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap">
-          <a href="{{ "/interview-questions/" | relURL }}" class="btn btn-primary">Browse Questions</a>
+          <a href="{{ "/interview-questions/" | absURL }}" class="btn btn-primary">Browse Questions</a>
           <a href="{{ .Site.Params.googleFormURL }}" target="_blank" rel="noopener" class="btn btn-ghost">Submit a Question</a>
         </div>
       </div>
@@ -153,21 +171,50 @@
   </div>
 </section>
 
-<!-- ── TICKER + TECH ROWS JS ──────────────────────────────────── -->
+<!-- ── ORBIT + TICKER JS ──────────────────────────────────────── -->
 <script>
 (function(){
+  /* ── Data ── */
+  var rings = [
+    { id:'r1', r:95,  items:[
+      { icon:'fas fa-server',        label:'EC2',     tip:'Virtual Compute',    col:'#FF9900' },
+      { icon:'fas fa-database',      label:'S3',      tip:'Object Storage',     col:'#FF9900' },
+      { icon:'fas fa-bolt',          label:'Lambda',  tip:'Serverless',         col:'#FF9900' },
+      { icon:'fas fa-network-wired', label:'VPC',     tip:'Networking',         col:'#FF9900' },
+    ]},
+    { id:'r2', r:155, rev:true, items:[
+      { icon:'fab fa-docker',        label:'Docker',  tip:'Containers',         col:'#2496ED' },
+      { icon:'fas fa-dharmachakra',  label:'K8s',     tip:'Orchestration',      col:'#326CE5' },
+      { icon:'fas fa-dharmachakra',  label:'EKS',     tip:'Managed K8s',        col:'#FF9900' },
+      { icon:'fas fa-shield-halved', label:'IAM',     tip:'Access Control',     col:'#FF9900' },
+      { icon:'fas fa-database',      label:'RDS',     tip:'Managed DB',         col:'#FF9900' },
+      { icon:'fas fa-gears',         label:'Jenkins', tip:'CI/CD Pipelines',    col:'#D33833' },
+    ]},
+    { id:'r3', r:225, items:[
+      { icon:'fab fa-github',        label:'GH Actions',  tip:'Automation',       col:'#00c8ff' },
+      { icon:'fas fa-fire',          label:'Prometheus',  tip:'Metrics',          col:'#E6522C' },
+      { icon:'fas fa-chart-bar',     label:'Grafana',     tip:'Dashboards',       col:'#F46800' },
+      { icon:'fas fa-layer-group',   label:'CloudForm.',  tip:'IaC Templates',    col:'#FF9900' },
+      { icon:'fas fa-chart-line',    label:'CloudWatch',  tip:'Monitoring',       col:'#FF9900' },
+      { icon:'fab fa-linux',         label:'Linux',       tip:'OS Fundamentals',  col:'#00c8ff' },
+      { icon:'fas fa-cube',          label:'Terraform',   tip:'Infrastructure',   col:'#9580FF' },
+      { icon:'fas fa-route',         label:'Route 53',    tip:'DNS Service',      col:'#FF9900' },
+    ]},
+  ];
+
   var awsTools = [
     { name:'EC2',            desc:'Virtual Compute', icon:'fas fa-server',        col:'#FF9900' },
     { name:'S3',             desc:'Object Storage',  icon:'fas fa-database',      col:'#FF9900' },
     { name:'Lambda',         desc:'Serverless',      icon:'fas fa-bolt',          col:'#FF9900' },
     { name:'VPC',            desc:'Networking',      icon:'fas fa-network-wired', col:'#FF9900' },
-    { name:'RDS',            desc:'Managed DB',      icon:'fas fa-database',      col:'#3B82F6' },
+    { name:'RDS',            desc:'Managed DB',      icon:'fas fa-database',      col:'#FF9900' },
     { name:'EKS',            desc:'Managed K8s',     icon:'fas fa-dharmachakra',  col:'#FF9900' },
-    { name:'IAM',            desc:'Access Control',  icon:'fas fa-shield-halved', col:'#FF4444' },
+    { name:'IAM',            desc:'Access Control',  icon:'fas fa-shield-halved', col:'#FF9900' },
     { name:'CloudFormation', desc:'IaC Templates',   icon:'fas fa-layer-group',   col:'#FF9900' },
     { name:'Route 53',       desc:'DNS Service',     icon:'fas fa-route',         col:'#FF9900' },
     { name:'CloudWatch',     desc:'Monitoring',      icon:'fas fa-chart-line',    col:'#FF9900' },
   ];
+
   var devopsTools = [
     { name:'Docker',         desc:'Containers',      icon:'fab fa-docker',        col:'#2496ED' },
     { name:'Kubernetes',     desc:'Orchestration',   icon:'fas fa-dharmachakra',  col:'#326CE5' },
@@ -178,6 +225,7 @@
     { name:'Terraform',      desc:'Infrastructure',  icon:'fas fa-cube',          col:'#9580FF' },
     { name:'Ansible',        desc:'Configuration',   icon:'fas fa-sliders',       col:'#EE0000' },
   ];
+
   var tickerItems = [
     {icon:'fab fa-aws',name:'AWS'},{icon:'fab fa-docker',name:'Docker'},
     {icon:'fas fa-dharmachakra',name:'Kubernetes'},{icon:'fas fa-gears',name:'Jenkins'},
@@ -189,6 +237,74 @@
     {icon:'fas fa-chart-line',name:'CloudWatch'},{icon:'fas fa-database',name:'RDS'},
   ];
 
+  /* ── Build orbit dots ── */
+  function buildOrbit() {
+    rings.forEach(function(ring) {
+      var el = document.getElementById(ring.id);
+      if (!el) return;
+      var n = ring.items.length;
+      ring.items.forEach(function(item, i) {
+        var angle = (i / n) * 2 * Math.PI;
+        var x = Math.cos(angle) * ring.r;
+        var y = Math.sin(angle) * ring.r;
+        var dot = document.createElement('div');
+        dot.className = 'orbit-dot';
+        dot.style.cssText = [
+          'position:absolute',
+          'width:44px','height:44px','border-radius:10px',
+          'display:flex','flex-direction:column',
+          'align-items:center','justify-content:center','gap:3px',
+          'left:calc(50% + ' + x + 'px - 22px)',
+          'top:calc(50% + '  + y + 'px - 22px)',
+          'background:' + item.col + '18',
+          'border:1px solid ' + item.col + '40',
+          'color:' + item.col,
+          'cursor:pointer','transition:.25s',
+        ].join(';');
+        /* counter-rotate speed matching ring CSS */
+        var speeds = { r1:'16s', r2:'26s', r3:'38s' };
+        var spd = speeds[ring.id] || '22s';
+        var dir = ring.rev ? 'spinF' : 'spinR';
+        dot.style.animation = dir + ' ' + spd + ' linear infinite';
+        dot.innerHTML =
+          '<i class="' + item.icon + '" style="font-size:1.15rem;filter:drop-shadow(0 0 5px ' + item.col + '88);pointer-events:none"></i>' +
+          '<span style="font-size:.42rem;font-weight:700;font-family:\'Fira Code\',monospace;letter-spacing:.04em;white-space:nowrap;opacity:.9;pointer-events:none">' + item.label + '</span>' +
+          '<div class="orbit-dot-tip">' + item.tip + '</div>';
+        /* tooltip show/hide */
+        dot.addEventListener('mouseenter', function(){
+          var tip = this.querySelector('.orbit-dot-tip');
+          if (tip) tip.style.opacity = '1';
+        });
+        dot.addEventListener('mouseleave', function(){
+          var tip = this.querySelector('.orbit-dot-tip');
+          if (tip) tip.style.opacity = '0';
+        });
+        el.appendChild(dot);
+      });
+    });
+  }
+
+  /* ── Build particles ── */
+  function buildParticles() {
+    var c = document.getElementById('orbitParticles');
+    if (!c) return;
+    var pts = [
+      {x:'10%',y:'8%', d:'3.1s',s:8},{x:'85%',y:'15%',d:'2.4s',s:6},
+      {x:'73%',y:'83%',d:'3.8s',s:7},{x:'18%',y:'78%',d:'2.9s',s:5},
+      {x:'50%',y:'3%', d:'4.2s',s:10},{x:'92%',y:'52%',d:'3.5s',s:7},
+      {x:'32%',y:'92%',d:'2.7s',s:5},{x:'60%',y:'40%',d:'5.1s',s:4},
+    ];
+    pts.forEach(function(p){
+      var el = document.createElement('div');
+      el.className = 'orbit-particle';
+      el.style.cssText = 'position:absolute;border-radius:50%;background:#00c8ff;opacity:.5;filter:blur(1px);' +
+        'left:' + p.x + ';top:' + p.y + ';width:' + p.s + 'px;height:' + p.s + 'px;' +
+        'animation:particleFloat ' + p.d + ' ease-in-out infinite alternate;';
+      c.appendChild(el);
+    });
+  }
+
+  /* ── Build ticker ── */
   function buildTicker() {
     var track = document.getElementById('tickerTrack');
     if (!track) return;
@@ -198,6 +314,7 @@
     }).join('');
   }
 
+  /* ── Build tech rows ── */
   function buildTechRow(id, tools) {
     var c = document.getElementById(id);
     if (!c) return;
@@ -212,7 +329,10 @@
     }).join('');
   }
 
+  /* ── Init ── */
   document.addEventListener('DOMContentLoaded', function(){
+    buildOrbit();
+    buildParticles();
     buildTicker();
     buildTechRow('awsRow', awsTools);
     buildTechRow('devopsRow', devopsTools);

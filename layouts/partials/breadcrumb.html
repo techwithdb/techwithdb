@@ -1,5 +1,5 @@
 <nav class="breadcrumb" aria-label="Breadcrumb">
-  <a href="{{ "/" | relURL }}">Home</a>
+  <a href="{{ "/" | absURL }}">Home</a>
   {{ $sections := .Ancestors.Reverse }}
   {{ range $sections }}
     {{ if not .IsHome }}

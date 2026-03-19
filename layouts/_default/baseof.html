@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="base-url" content="{{ "/" | relURL }}">
+  <meta name="base-url" content="{{ "/" | absURL }}">
 
   <title>{{ if .IsHome }}{{ .Site.Title }} — AWS &amp; DevOps Tutorials{{ else }}{{ .Title }} | {{ .Site.Title }}{{ end }}</title>
   <meta name="description" content="{{ with .Description }}{{ . }}{{ else }}{{ with .Summary }}{{ . | plainify | truncate 155 }}{{ else }}{{ .Site.Params.description }}{{ end }}{{ end }}">
@@ -22,7 +22,7 @@
 
   <link rel="canonical" href="{{ .Permalink }}">
   <link rel="alternate" type="application/rss+xml" title="{{ .Site.Title }}" href="{{ "/feed.xml" | absURL }}">
-  <link rel="icon" href="{{ "images/favicon.svg" | relURL }}" type="image/svg+xml">
+  <link rel="icon" href="{{ "images/favicon.svg" | absURL }}" type="image/svg+xml">
 
   <!-- Fonts: Sora + Fira Code (matching TechWithDB design) -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -33,7 +33,7 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 
   <!-- Main CSS -->
-  <link rel="stylesheet" href="{{ "css/main.css" | relURL }}">
+  <link rel="stylesheet" href="{{ "css/main.css" | absURL }}">
 
   {{ if .Site.Params.googleAnalytics }}
   <script async src="https://www.googletagmanager.com/gtag/js?id={{ .Site.Params.googleAnalytics }}"></script>
@@ -81,12 +81,12 @@
         <i class="fas fa-times"></i>
       </button>
     </div>
-    <a href="{{ "/" | relURL }}"><i class="fas fa-home"></i> Home</a>
-    <a href="{{ "/aws/" | relURL }}"><i class="fab fa-aws"></i> AWS Services</a>
-    <a href="{{ "/devops/" | relURL }}"><i class="fas fa-infinity"></i> DevOps Tools</a>
-    <a href="{{ "/interview-questions/" | relURL }}"><i class="fas fa-comments"></i> Interview Q&amp;A</a>
-    <a href="{{ "/blog/" | relURL }}"><i class="fas fa-pen-nib"></i> Blog</a>
-    <a href="{{ "/contact/" | relURL }}"><i class="fas fa-envelope"></i> Contact</a>
+    <a href="{{ "/" | absURL }}"><i class="fas fa-home"></i> Home</a>
+    <a href="{{ "/aws/" | absURL }}"><i class="fab fa-aws"></i> AWS Services</a>
+    <a href="{{ "/devops/" | absURL }}"><i class="fas fa-infinity"></i> DevOps Tools</a>
+    <a href="{{ "/interview-questions/" | absURL }}"><i class="fas fa-comments"></i> Interview Q&amp;A</a>
+    <a href="{{ "/blog/" | absURL }}"><i class="fas fa-pen-nib"></i> Blog</a>
+    <a href="{{ "/contact/" | absURL }}"><i class="fas fa-envelope"></i> Contact</a>
     <div class="mobile-form-cta">
       <a href="{{ .Site.Params.googleFormURL }}" target="_blank" rel="noopener" class="btn btn-primary" style="width:100%;justify-content:center;display:flex;gap:8px">
         <i class="fab fa-google"></i> Submit a Question
@@ -94,11 +94,11 @@
     </div>
   </nav>
 
-  <!-- highlight.js for syntax highlighting — light theme -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github.min.css">
+  <!-- highlight.js for syntax highlighting -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github-dark.min.css">
   <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js" defer></script>
   <script defer>document.addEventListener('DOMContentLoaded',()=>{if(window.hljs){hljs.configure({ignoreUnescapedHTML:true});hljs.highlightAll();}})</script>
 
-  <script src="{{ "js/main.js" | relURL }}" defer></script>
+  <script src="{{ "js/main.js" | absURL }}" defer></script>
 </body>
 </html>

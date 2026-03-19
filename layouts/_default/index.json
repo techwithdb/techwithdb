@@ -1,2 +1,0 @@
-[{{ range $i, $p := .Site.RegularPages }}{{ if $i }},{{ end }}
-{"title":{{ $p.Title | jsonify }},"permalink":{{ $p.Permalink | jsonify }},"section":{{ $p.Section | jsonify }},"content":{{ $p.Content | plainify | truncate 400 | jsonify }},"tags":{{ $p.Params.tags | jsonify }},"date":{{ $p.Date | time.Format "2006-01-02" | jsonify }}}{{ end }}]

@@ -35,7 +35,7 @@
         (dict "name" "IAM"            "icon" "fas fa-shield-halved"  "url" "/interview-questions/aws/iam-interview-questions/")
       }}
       {{ range $topics }}
-      <a href="{{ .url | relURL }}" class="svc-card">
+      <a href="{{ .url | absURL }}" class="svc-card">
         <div class="svc-icon"><i class="{{ .icon }}"></i></div>
         <div>
           <div class="svc-name">{{ .name }}</div>
@@ -64,7 +64,7 @@
         (dict "name" "Grafana"        "icon" "fas fa-chart-bar"    "cls" "grafana"    "url" "/interview-questions/devops/grafana-interview-questions/")
       }}
       {{ range $devops }}
-      <a href="{{ .url | relURL }}" class="svc-card">
+      <a href="{{ .url | absURL }}" class="svc-card">
         <div class="svc-icon {{ .cls }}"><i class="{{ .icon }}"></i></div>
         <div>
           <div class="svc-name">{{ .name }}</div>

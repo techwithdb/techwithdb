@@ -2,53 +2,53 @@
   <nav class="nav-inner" aria-label="Main navigation">
 
     <!-- Logo: <TechWithDB/> style -->
-    <a href="{{ "/" | relURL }}" class="nav-logo" aria-label="{{ .Site.Title }} — Home">
+    <a href="{{ "/" | absURL }}" class="nav-logo" aria-label="{{ .Site.Title }} — Home">
       <span class="logo-b">&lt;</span>TechWith<span class="logo-b">DB</span><span class="logo-b">/&gt;</span>
     </a>
 
     <!-- Desktop nav -->
     <ul class="nav-links" role="list">
-      <li><a href="{{ "/" | relURL }}"{{ if .IsHome }} class="active"{{ end }}>Home</a></li>
+      <li><a href="{{ "/" | absURL }}"{{ if .IsHome }} class="active"{{ end }}>Home</a></li>
 
       <!-- AWS dropdown -->
       <li class="nav-has-drop">
-        <a href="{{ "/aws/" | relURL }}"{{ if eq .Section "aws" }} class="active"{{ end }}>
+        <a href="{{ "/aws/" | absURL }}"{{ if eq .Section "aws" }} class="active"{{ end }}>
           AWS <i class="fas fa-chevron-down" style="font-size:.6rem;margin-left:3px"></i>
         </a>
         <div class="nav-dropdown">
-          <a href="{{ "/aws/ec2/" | relURL }}">        <i class="fas fa-server"></i>         EC2</a>
-          <a href="{{ "/aws/s3/" | relURL }}">          <i class="fas fa-database"></i>        S3</a>
-          <a href="{{ "/aws/vpc/" | relURL }}">         <i class="fas fa-network-wired"></i>   VPC</a>
-          <a href="{{ "/aws/lambda/" | relURL }}">      <i class="fas fa-bolt"></i>            Lambda</a>
-          <a href="{{ "/aws/rds/" | relURL }}">         <i class="fas fa-database"></i>        RDS</a>
-          <a href="{{ "/aws/eks/" | relURL }}">         <i class="fas fa-dharmachakra"></i>    EKS</a>
+          <a href="{{ "/aws/ec2/" | absURL }}">        <i class="fas fa-server"></i>         EC2</a>
+          <a href="{{ "/aws/s3/" | absURL }}">          <i class="fas fa-database"></i>        S3</a>
+          <a href="{{ "/aws/vpc/" | absURL }}">         <i class="fas fa-network-wired"></i>   VPC</a>
+          <a href="{{ "/aws/lambda/" | absURL }}">      <i class="fas fa-bolt"></i>            Lambda</a>
+          <a href="{{ "/aws/rds/" | absURL }}">         <i class="fas fa-database"></i>        RDS</a>
+          <a href="{{ "/aws/eks/" | absURL }}">         <i class="fas fa-dharmachakra"></i>    EKS</a>
           <div class="nav-drop-divider"></div>
-          <a href="{{ "/aws/iam/" | relURL }}">         <i class="fas fa-shield-halved"></i>   IAM</a>
-          <a href="{{ "/aws/cloudformation/" | relURL }}"><i class="fas fa-layer-group"></i>   CloudFormation</a>
-          <a href="{{ "/aws/route53/" | relURL }}">     <i class="fas fa-route"></i>           Route 53</a>
-          <a href="{{ "/aws/cloudwatch/" | relURL }}">  <i class="fas fa-chart-line"></i>      CloudWatch</a>
+          <a href="{{ "/aws/iam/" | absURL }}">         <i class="fas fa-shield-halved"></i>   IAM</a>
+          <a href="{{ "/aws/cloudformation/" | absURL }}"><i class="fas fa-layer-group"></i>   CloudFormation</a>
+          <a href="{{ "/aws/route53/" | absURL }}">     <i class="fas fa-route"></i>           Route 53</a>
+          <a href="{{ "/aws/cloudwatch/" | absURL }}">  <i class="fas fa-chart-line"></i>      CloudWatch</a>
         </div>
       </li>
 
       <!-- DevOps dropdown -->
       <li class="nav-has-drop">
-        <a href="{{ "/devops/" | relURL }}"{{ if eq .Section "devops" }} class="active"{{ end }}>
+        <a href="{{ "/devops/" | absURL }}"{{ if eq .Section "devops" }} class="active"{{ end }}>
           DevOps <i class="fas fa-chevron-down" style="font-size:.6rem;margin-left:3px"></i>
         </a>
         <div class="nav-dropdown">
-          <a href="{{ "/devops/docker/" | relURL }}">         <i class="fab fa-docker"></i>       Docker</a>
-          <a href="{{ "/devops/kubernetes/" | relURL }}">     <i class="fas fa-dharmachakra"></i> Kubernetes</a>
-          <a href="{{ "/devops/jenkins/" | relURL }}">        <i class="fas fa-gears"></i>        Jenkins</a>
+          <a href="{{ "/devops/docker/" | absURL }}">         <i class="fab fa-docker"></i>       Docker</a>
+          <a href="{{ "/devops/kubernetes/" | absURL }}">     <i class="fas fa-dharmachakra"></i> Kubernetes</a>
+          <a href="{{ "/devops/jenkins/" | absURL }}">        <i class="fas fa-gears"></i>        Jenkins</a>
           <div class="nav-drop-divider"></div>
-          <a href="{{ "/devops/github-actions/" | relURL }}"> <i class="fab fa-github"></i>       GitHub Actions</a>
-          <a href="{{ "/devops/prometheus/" | relURL }}">     <i class="fas fa-fire"></i>         Prometheus</a>
-          <a href="{{ "/devops/grafana/" | relURL }}">        <i class="fas fa-chart-bar"></i>    Grafana</a>
+          <a href="{{ "/devops/github-actions/" | absURL }}"> <i class="fab fa-github"></i>       GitHub Actions</a>
+          <a href="{{ "/devops/prometheus/" | absURL }}">     <i class="fas fa-fire"></i>         Prometheus</a>
+          <a href="{{ "/devops/grafana/" | absURL }}">        <i class="fas fa-chart-bar"></i>    Grafana</a>
         </div>
       </li>
 
-      <li><a href="{{ "/interview-questions/" | relURL }}"{{ if eq .Section "interview-questions" }} class="active"{{ end }}>Interview Q&amp;A</a></li>
-      <li><a href="{{ "/blog/" | relURL }}"{{ if eq .Section "blog" }} class="active"{{ end }}>Blog</a></li>
-      <li><a href="{{ "/contact/" | relURL }}"{{ if eq .Title "Contact & Feedback" }} class="active"{{ end }}>About</a></li>
+      <li><a href="{{ "/interview-questions/" | absURL }}"{{ if eq .Section "interview-questions" }} class="active"{{ end }}>Interview Q&amp;A</a></li>
+      <li><a href="{{ "/blog/" | absURL }}"{{ if eq .Section "blog" }} class="active"{{ end }}>Blog</a></li>
+      <li><a href="{{ "/contact/" | absURL }}"{{ if eq .Title "Contact & Feedback" }} class="active"{{ end }}>About</a></li>
     </ul>
 
     <!-- Right actions -->

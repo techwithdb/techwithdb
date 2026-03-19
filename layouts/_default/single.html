@@ -61,7 +61,7 @@
         </div>
         {{ with .Params.tags }}
         <div class="art-tags">
-          {{ range . }}<a href="{{ "/tags/" | relURL }}{{ . | urlize }}/" class="art-tag">{{ . }}</a>{{ end }}
+          {{ range . }}<a href="{{ "/tags/" | absURL }}{{ . | urlize }}/" class="art-tag">{{ . }}</a>{{ end }}
         </div>
         {{ end }}
       </header>
@@ -72,7 +72,7 @@
       </div>
 
       <!-- Google Form CTA -->
-      {{- partial "form-cta.html" (dict) -}}
+      {{- partial "form-cta.html" . -}}
 
       <!-- Prev / Next -->
       <nav class="art-nav" style="display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-top:2rem">
