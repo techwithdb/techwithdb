@@ -1,14 +1,14 @@
 <header class="site-header" role="banner">
   <nav class="nav-inner" aria-label="Main navigation">
 
-    <!-- Logo: <TechWithDB/> style -->
+    <!-- Logo: <TechWithDB> style -->
     <a href="{{ "/" | relURL }}" class="nav-logo" aria-label="{{ .Site.Title }} — Home">
       <span class="logo-b">&lt;</span>TechWith<span class="logo-b">DB</span><span class="logo-b">/&gt;</span>
     </a>
 
     <!-- Desktop nav -->
     <ul class="nav-links" role="list">
-      <li><a href="{{ "/" | relURL }}"{{ if .IsHome }} class="active"{{ end }}>Home</a></li>
+      <li><a href="{{ "/techwithdb/" | relURL }}"{{ if .IsHome }} class="active"{{ end }}>Home</a></li>
 
       <!-- AWS dropdown -->
       <li class="nav-has-drop">
