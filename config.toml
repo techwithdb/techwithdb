@@ -6,8 +6,8 @@ title = "TechWithDB"
 enableRobotsTXT = true
 enableGitInfo = true
 
-relativeURLs = true
-canonifyURLs = true
+relativeURLs = false
+canonifyURLs = false
 
 copyright = "© 2025 TechWithDB. All rights reserved."
 

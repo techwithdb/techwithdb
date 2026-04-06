@@ -12,7 +12,7 @@
 
       <!-- AWS dropdown -->
       <li class="nav-has-drop">
-        <a href="{{ "/aws/" | relURL }}"{{ if eq .Section "aws" }} class="active"{{ end }}>
+        <a href="{{ "aws" | relURL }}"{{ if eq .Section "aws" }} class="active"{{ end }}>
           AWS <i class="fas fa-chevron-down" style="font-size:.6rem;margin-left:3px"></i>
         </a>
         <div class="nav-dropdown">
@@ -32,7 +32,7 @@
 
       <!-- DevOps dropdown -->
       <li class="nav-has-drop">
-        <a href="{{ "/devops/" | relURL }}"{{ if eq .Section "devops" }} class="active"{{ end }}>
+        <a href="{{ "devops" | relURL }}"{{ if eq .Section "devops" }} class="active"{{ end }}>
           DevOps <i class="fas fa-chevron-down" style="font-size:.6rem;margin-left:3px"></i>
         </a>
         <div class="nav-dropdown">
@@ -46,9 +46,9 @@
         </div>
       </li>
 
-      <li><a href="{{ "/interview-questions/" | relURL }}"{{ if eq .Section "interview-questions" }} class="active"{{ end }}>Interview Q&amp;A</a></li>
-      <li><a href="{{ "/blog/" | relURL }}"{{ if eq .Section "blog" }} class="active"{{ end }}>Blog</a></li>
-      <li><a href="{{ "/contact/" | relURL }}"{{ if eq .Title "Contact & Feedback" }} class="active"{{ end }}>About</a></li>
+      <li><a href="{{ "interview-questions" | relURL }}"{{ if eq .Section "interview-questions" }} class="active"{{ end }}>Interview Q&amp;A</a></li>
+      <li><a href="{{ "blog" | relURL }}"{{ if eq .Section "blog" }} class="active"{{ end }}>Blog</a></li>
+      <li><a href="{{ "contact" | relURL }}"{{ if eq .Title "Contact & Feedback" }} class="active"{{ end }}>About</a></li>
     </ul>
 
     <!-- Right actions -->
