@@ -1,5 +1,5 @@
 ---
-title: "AWS EC2 Interview Questions & Answers (2025)"
+title: "AWS EC2 Interview Questions & Answers"
 description: "50+ AWS EC2 interview questions covering instance types, Auto Scaling, AMIs, pricing models, networking, storage, and troubleshooting — Basic to Advanced."
 date: 2025-01-20
 author: "TechwithDB"
