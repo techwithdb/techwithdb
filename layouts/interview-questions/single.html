@@ -1,54 +1,133 @@
 {{ define "main" }}
 
-<div class="wrap">
+{{ $s := .Section }}
+{{ $badgeMap := dict "aws" "badge-aws" "devops" "badge-devops" "blog" "badge-blog" "interview-questions" "badge-interview" }}
+{{ $badge := index $badgeMap $s | default "badge-blog" }}
+
+<div class="wrap" style="padding-top:0">
   {{- partial "breadcrumb.html" . -}}
+</div>
 
-  <div style="max-width:860px;margin:0 auto;padding:1.5rem 0 4rem">
+<div class="wrap">
+  <div class="article-layout">
 
-    <!-- Page header -->
-    <header style="background:var(--surface);border:1px solid var(--border);border-radius:var(--r-xl);padding:2rem 2.5rem;margin-bottom:2rem">
-      <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:1rem">
-        <span class="badge badge-interview"><i class="fas fa-comments"></i> Interview Q&amp;A</span>
-        {{ with .Params.level }}<span class="badge" style="background:var(--surface-2);color:var(--ink-3);border:1px solid var(--border)">{{ . }}</span>{{ end }}
-        {{ with .Params.tool }}<span class="badge badge-{{ . }}">{{ . | title }}</span>{{ end }}
+    <!-- ── Sidebar ─────────────────────────────── -->
+    <aside class="article-sidebar" aria-label="Article sidebar">
+
+      <!-- TOC -->
+      <div class="toc-box">
+        <h4><i class="fas fa-list-ul" style="color:var(--aws);margin-right:6px"></i>Contents</h4>
+        <div id="toc"></div>
       </div>
-      <h1 style="font-size:clamp(1.5rem,3vw,2.1rem);margin-bottom:.75rem">{{ .Title }}</h1>
-      {{ with .Description }}<p style="color:var(--ink-2);font-size:1.05rem;margin:0">{{ . }}</p>{{ end }}
-      <div style="display:flex;gap:18px;margin-top:1.25rem;font-size:.84rem;color:var(--ink-4);flex-wrap:wrap">
-        <span><i class="fas fa-calendar"></i> {{ .Date | time.Format "January 2, 2006" }}</span>
-        {{ with .Params.question_count }}<span><i class="fas fa-question-circle"></i> {{ . }} Questions</span>{{ end }}
-        <span><i class="fas fa-clock"></i> {{ .ReadingTime }} min read</span>
+
+      <!-- Meta card -->
+      <div class="sidebar-card">
+        <div class="sidebar-card-title">Article Info</div>
+        <div style="display:flex;flex-direction:column;gap:8px;font-size:.85rem;color:var(--ink-2)">
+          <span><i class="fas fa-calendar" style="color:var(--aws);width:16px"></i> {{ .Date | time.Format "Jan 2, 2006" }}</span>
+          {{ with .Params.author }}<span><i class="fas fa-user" style="color:var(--aws);width:16px"></i> {{ . }}</span>{{ end }}
+          <span><i class="fas fa-clock" style="color:var(--aws);width:16px"></i> {{ .ReadingTime }} min read</span>
+          {{ with .Params.level }}<span><i class="fas fa-layer-group" style="color:var(--aws);width:16px"></i> {{ . }}</span>{{ end }}
+          {{ with .Params.question_count }}<span><i class="fas fa-question-circle" style="color:var(--aws);width:16px"></i> {{ . }} Questions</span>{{ end }}
+        </div>
       </div>
-    </header>
 
-    <!-- Controls bar -->
-    <div class="qa-controls">
-      <div class="filter-pills">
-        <span style="font-size:.79rem;font-weight:700;color:var(--ink-4)">Level:</span>
-        <button class="pill active" data-level="all">All</button>
-        <button class="pill pill-basic"    data-level="basic">🟢 Basic</button>
-        <button class="pill pill-inter"    data-level="intermediate">🟡 Intermediate</button>
-        <button class="pill pill-advanced" data-level="advanced">🔴 Advanced</button>
+      <!-- Share -->
+      <div class="sidebar-card">
+        <div class="sidebar-card-title">Share this article</div>
+        <div class="share-btns">
+          <a href="https://twitter.com/intent/tweet?text={{ .Title | urlize }}&amp;url={{ .Permalink }}" target="_blank" rel="noopener" aria-label="Share on Twitter"><i class="fab fa-twitter"></i></a>
+          <a href="https://www.linkedin.com/sharing/share-offsite/?url={{ .Permalink }}" target="_blank" rel="noopener" aria-label="Share on LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+          <button onclick="navigator.clipboard.writeText(location.href);this.innerHTML='<i class=\'fas fa-check\'></i>';setTimeout(()=>this.innerHTML='<i class=\'fas fa-link\'></i>',2000)" aria-label="Copy link"><i class="fas fa-link"></i></button>
+        </div>
       </div>
-      <div style="display:flex;gap:8px">
-        <button id="expandAll"   class="btn btn-ghost btn-sm"><i class="fas fa-plus"></i> Expand All</button>
-        <button id="collapseAll" class="btn btn-ghost btn-sm"><i class="fas fa-minus"></i> Collapse</button>
+
+    </aside>
+
+    <!-- ── Article ─────────────────────────────── -->
+    <article>
+
+      <header class="art-header">
+        <div class="art-badges">
+          <span class="badge {{ $badge }}"><i class="fas fa-comments"></i> Interview Q&amp;A</span>
+          {{ with .Params.level }}<span class="badge" style="background:var(--surface-2);color:var(--ink-3);border:1px solid var(--border)">{{ . }}</span>{{ end }}
+          {{ with .Params.tool }}<span class="badge badge-{{ . }}">{{ . | title }}</span>{{ end }}
+          {{ with .Params.series }}<span class="badge badge-devops"><i class="fas fa-layer-group"></i> {{ . }}</span>{{ end }}
+        </div>
+        <h1 class="art-title">{{ .Title }}</h1>
+        {{ with .Description }}<p class="art-desc">{{ . }}</p>{{ end }}
+        <div class="art-meta">
+          <span><i class="fas fa-calendar"></i>{{ .Date | time.Format "January 2, 2006" }}</span>
+          <span><i class="fas fa-clock"></i>{{ .ReadingTime }} min read</span>
+          {{ with .Params.question_count }}<span><i class="fas fa-question-circle"></i>{{ . }} Questions</span>{{ end }}
+          {{ with .Params.author }}<span><i class="fas fa-user"></i>{{ . }}</span>{{ end }}
+        </div>
+        {{ with .Params.tags }}
+        <div class="art-tags">
+          {{ range . }}<a href="{{ "/tags/" | relURL }}{{ . | urlize }}/" class="art-tag">{{ . }}</a>{{ end }}
+        </div>
+        {{ end }}
+      </header>
+
+      <!-- ── Filter pills + expand/collapse (interview-specific) ── -->
+      <div class="qa-controls">
+        <div class="filter-pills">
+          <span style="font-size:.79rem;font-weight:700;color:var(--ink-4)">Level:</span>
+          <button class="pill active" data-level="all">All</button>
+          <button class="pill pill-basic"    data-level="basic">🟢 Basic</button>
+          <button class="pill pill-inter"    data-level="intermediate">🟡 Intermediate</button>
+          <button class="pill pill-advanced" data-level="advanced">🔴 Advanced</button>
+        </div>
+        <div style="display:flex;gap:8px">
+          <button id="expandAll"   class="btn btn-ghost btn-sm"><i class="fas fa-plus"></i> Expand All</button>
+          <button id="collapseAll" class="btn btn-ghost btn-sm"><i class="fas fa-minus"></i> Collapse</button>
+        </div>
       </div>
-    </div>
 
-    <!-- Q&A content rendered via qa shortcodes in markdown -->
-    <div class="prose">
-      {{ .Content }}
-    </div>
+      <!-- Content -->
+      <div class="prose">
+        {{ .Content }}
+      </div>
 
-    <!-- Submit CTA -->
-    {{- partial "form-cta.html" (dict
-      "title" "Add More Questions to This Guide"
-      "body"  "Know questions that should be here? Share them and help the community!"
-      "icon"  "fas fa-plus-circle"
-      "Site"  .Site
-    ) -}}
+      <!-- Google Form CTA -->
+      {{- partial "form-cta.html" (dict
+        "title" "Add More Questions to This Guide"
+        "body"  "Know questions that should be here? Share them and help the community!"
+        "icon"  "fas fa-plus-circle"
+        "Site"  .Site
+      ) -}}
 
+      <!-- Prev / Next -->
+      <nav class="art-nav" style="display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-top:2rem">
+        {{ with .PrevInSection }}
+        <a href="{{ .Permalink }}" style="background:var(--surface);border:1px solid var(--border);border-radius:var(--r-lg);padding:16px 18px;text-decoration:none;color:inherit;transition:var(--t)"
+           onmouseover="this.style.borderColor='var(--aws)'" onmouseout="this.style.borderColor='var(--border)'">
+          <div style="font-size:.74rem;color:var(--ink-4);margin-bottom:5px"><i class="fas fa-arrow-left"></i> Previous</div>
+          <div style="font-weight:700;font-size:.9rem;font-family:var(--font-display)">{{ .Title | truncate 55 }}</div>
+        </a>
+        {{ else }}<div></div>{{ end }}
+
+        {{ with .NextInSection }}
+        <a href="{{ .Permalink }}" style="background:var(--surface);border:1px solid var(--border);border-radius:var(--r-lg);padding:16px 18px;text-decoration:none;color:inherit;transition:var(--t);text-align:right"
+           onmouseover="this.style.borderColor='var(--aws)'" onmouseout="this.style.borderColor='var(--border)'">
+          <div style="font-size:.74rem;color:var(--ink-4);margin-bottom:5px">Next <i class="fas fa-arrow-right"></i></div>
+          <div style="font-weight:700;font-size:.9rem;font-family:var(--font-display)">{{ .Title | truncate 55 }}</div>
+        </a>
+        {{ else }}<div></div>{{ end }}
+      </nav>
+
+      <!-- Related posts -->
+      {{ $related := .Site.RegularPages.Related . | first 3 }}
+      {{ if $related }}
+      <div class="related-posts" style="margin-top:3rem">
+        <h3 style="margin-bottom:1.25rem">Related Articles</h3>
+        <div class="post-grid">
+          {{ range $related }}{{ partial "post-card.html" . }}{{ end }}
+        </div>
+      </div>
+      {{ end }}
+
+    </article>
   </div>
 </div>
 

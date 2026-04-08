@@ -1,5 +1,5 @@
 ---
-title: "Jenkins Scenario-Based Interview Questions & Answers"
+title: "Jenkins Scenario-Based Interview Questions & Answers (2026)"
 description: "Real-world Jenkins scenarios asked at top tech companies for Senior DevOps / CI-CD Engineer roles. Covers pipelines, shared libraries, security, scalability, troubleshooting, and integrations."
 date: 2026-03-11T15:19:55+05:30
 author: "DB"

@@ -18,65 +18,93 @@
   </div>
 </section>
 
-<!-- AWS Interview Q&A -->
-<section class="sec sec-alt">
-  <div class="wrap">
-    <div class="sec-hd">
-      <span class="sec-eye"><i class="fab fa-aws"></i> AWS</span>
-      <h2 class="sec-title">AWS Interview Questions</h2>
-    </div>
-    <div class="service-grid">
-      {{ $topics := slice
-        (dict "name" "EC2"            "icon" "fas fa-server"        "url" "/interview-questions/aws/ec2-interview-questions/")
-        (dict "name" "S3"             "icon" "fas fa-database"       "url" "/interview-questions/aws/s3-interview-questions/")
-        (dict "name" "VPC"            "icon" "fas fa-network-wired"  "url" "/interview-questions/aws/vpc-interview-questions/")
-        (dict "name" "Lambda"         "icon" "fas fa-bolt"           "url" "/interview-questions/aws/lambda-interview-questions/")
-        (dict "name" "EKS"            "icon" "fas fa-dharmachakra"   "url" "/interview-questions/aws/eks-interview-questions/")
-        (dict "name" "IAM"            "icon" "fas fa-shield-halved"  "url" "/interview-questions/aws/iam-interview-questions/")
-      }}
-      {{ range $topics }}
-      <a href="{{ .url | relURL }}" class="svc-card">
-        <div class="svc-icon"><i class="{{ .icon }}"></i></div>
-        <div>
-          <div class="svc-name">{{ .name }}</div>
-          <div class="svc-count">Interview Q&amp;A</div>
-        </div>
-      </a>
-      {{ end }}
-    </div>
-  </div>
-</section>
+{{/* ── Icon map for known subsections ── */}}
+{{ $iconMap := dict
+  "ec2"             "fas fa-server"
+  "s3"              "fas fa-database"
+  "vpc"             "fas fa-network-wired"
+  "lambda"          "fas fa-bolt"
+  "eks"             "fas fa-dharmachakra"
+  "iam"             "fas fa-shield-halved"
+  "rds"             "fas fa-table"
+  "cloudwatch"      "fas fa-chart-line"
+  "cloudfront"      "fas fa-globe"
+  "route53"         "fas fa-route"
+  "docker"          "fab fa-docker"
+  "kubernetes"      "fas fa-dharmachakra"
+  "jenkins"         "fas fa-gears"
+  "github-actions"  "fab fa-github"
+  "prometheus"      "fas fa-fire"
+  "grafana"         "fas fa-chart-bar"
+  "terraform"       "fas fa-cubes"
+  "ansible"         "fas fa-sliders"
+  "helm"            "fas fa-dharmachakra"
+  "git"             "fab fa-git-alt"
+}}
 
-<!-- DevOps Interview Q&A -->
-<section class="sec">
-  <div class="wrap">
-    <div class="sec-hd">
-      <span class="sec-eye"><i class="fas fa-infinity"></i> DevOps</span>
-      <h2 class="sec-title">DevOps Interview Questions</h2>
-    </div>
-    <div class="service-grid">
-      {{ $devops := slice
-        (dict "name" "Docker"         "icon" "fab fa-docker"       "cls" "docker"     "url" "/interview-questions/devops/docker-interview-questions/")
-        (dict "name" "Kubernetes"     "icon" "fas fa-dharmachakra" "cls" "k8s"        "url" "/interview-questions/devops/kubernetes-interview-questions/")
-        (dict "name" "Jenkins"        "icon" "fas fa-gears"        "cls" "jenkins"    "url" "/interview-questions/devops/jenkins-interview-questions/")
-        (dict "name" "GitHub Actions" "icon" "fab fa-github"       "cls" "github-act" "url" "/interview-questions/devops/github-actions-interview-questions/")
-        (dict "name" "Prometheus"     "icon" "fas fa-fire"         "cls" "prometheus" "url" "/interview-questions/devops/prometheus-interview-questions/")
-        (dict "name" "Grafana"        "icon" "fas fa-chart-bar"    "cls" "grafana"    "url" "/interview-questions/devops/grafana-interview-questions/")
-      }}
-      {{ range $devops }}
-      <a href="{{ .url | relURL }}" class="svc-card">
-        <div class="svc-icon {{ .cls }}"><i class="{{ .icon }}"></i></div>
-        <div>
-          <div class="svc-name">{{ .name }}</div>
-          <div class="svc-count">Interview Q&amp;A</div>
-        </div>
-      </a>
-      {{ end }}
-    </div>
-  </div>
-</section>
+{{ $clsMap := dict
+  "docker"          "docker"
+  "kubernetes"      "k8s"
+  "jenkins"         "jenkins"
+  "github-actions"  "github-act"
+  "prometheus"      "prometheus"
+  "grafana"         "grafana"
+  "terraform"       "terraform"
+}}
 
-<!-- All Q&A posts listing -->
+{{/* ── Loop through top-level subsections (aws, devops, etc.) ── */}}
+{{ range .Sections }}
+  {{ $parent := . }}
+  {{ $parentSlug := .Section }}
+  {{ $isAWS    := eq .Title "AWS" }}
+  {{ $isDevOps := or (eq .Title "DevOps") (eq .Title "Devops") }}
+
+  <section class="sec {{ if $isAWS }}sec-alt{{ end }}">
+    <div class="wrap">
+      <div class="sec-hd">
+        {{ if $isAWS }}
+          <span class="sec-eye"><i class="fab fa-aws"></i> AWS</span>
+          <h2 class="sec-title">AWS Interview Questions</h2>
+        {{ else if $isDevOps }}
+          <span class="sec-eye"><i class="fas fa-infinity"></i> DevOps</span>
+          <h2 class="sec-title">DevOps Interview Questions</h2>
+        {{ else }}
+          <span class="sec-eye"><i class="fas fa-comments"></i> {{ .Title }}</span>
+          <h2 class="sec-title">{{ .Title }} Interview Questions</h2>
+        {{ end }}
+      </div>
+
+      {{/* If this section has sub-sections (e.g. aws → ec2, s3…) */}}
+      {{ if .Sections }}
+      <div class="service-grid">
+        {{ range .Sections }}
+          {{ $slug  := .File.Dir | path.Base | lower }}
+          {{ $icon  := index $iconMap $slug | default "fas fa-folder-open" }}
+          {{ $cls   := index $clsMap $slug | default "" }}
+          <a href="{{ .Permalink }}" class="svc-card">
+            <div class="svc-icon {{ $cls }}"><i class="{{ $icon }}"></i></div>
+            <div>
+              <div class="svc-name">{{ .Title }}</div>
+              <div class="svc-count">{{ len .Pages }} article{{ if ne (len .Pages) 1 }}s{{ end }}</div>
+            </div>
+          </a>
+        {{ end }}
+      </div>
+
+      {{/* If pages live directly under this section (flat structure) */}}
+      {{ else if .Pages }}
+      <div class="post-grid">
+        {{ range .Pages.ByDate.Reverse }}
+          {{ partial "post-card.html" . }}
+        {{ end }}
+      </div>
+      {{ end }}
+
+    </div>
+  </section>
+{{ end }}
+
+{{/* ── Fallback: pages directly under /interview-questions/ ── */}}
 {{ if .Pages }}
 <section class="sec sec-alt">
   <div class="wrap">
