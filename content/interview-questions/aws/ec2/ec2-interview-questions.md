@@ -241,7 +241,7 @@ ssh -i my-key.pem centos@<public-ip>     # CentOS
 - Not supported on bare metal instances
 {{< /qa >}}
 
-{{< qa num="13" q="How does Auto Scaling work? Explain the different scaling policies." level="intermediate" >}}
+{{< qa num="1" q="How does Auto Scaling work? Explain the different scaling policies." level="intermediate" >}}
 **Auto Scaling Group (ASG)** automatically adjusts instance count based on demand.
 
 **Key components:**
@@ -276,7 +276,7 @@ aws autoscaling put-scheduled-update-group-action \
 **4. Predictive Scaling** — ML-based, forecasts 24h ahead and scales proactively.
 {{< /qa >}}
 
-{{< qa num="14" q="What is the difference between a Security Group and a Network ACL?" level="intermediate" >}}
+{{< qa num="2" q="What is the difference between a Security Group and a Network ACL?" level="intermediate" >}}
 | Feature | Security Group | Network ACL |
 |---------|---------------|-------------|
 | **Applied at** | Instance/ENI level | Subnet level |
@@ -291,7 +291,7 @@ aws autoscaling put-scheduled-update-group-action \
 **Best practice:** SGs as primary control, NACLs as supplementary subnet-level guardrails.
 {{< /qa >}}
 
-{{< qa num="15" q="What are EC2 Placement Groups?" level="intermediate" >}}
+{{< qa num="3" q="What are EC2 Placement Groups?" level="intermediate" >}}
 Placement groups control **physical placement** of instances on AWS infrastructure.
 
 **Cluster** — all in same AZ, same rack
@@ -314,7 +314,7 @@ aws ec2 create-placement-group \
 ```
 {{< /qa >}}
 
-{{< qa num="16" q="What is the difference between EBS and Instance Store?" level="intermediate" >}}
+{{< qa num="4" q="What is the difference between EBS and Instance Store?" level="intermediate" >}}
 | Feature | EBS (Elastic Block Store) | Instance Store |
 |---------|--------------------------|----------------|
 | **Persistence** | Survives stop/start | Ephemeral — lost on stop/terminate |
@@ -327,7 +327,7 @@ aws ec2 create-placement-group \
 **When to use Instance Store:** Applications that replicate data across nodes (Redis cluster, Kafka, Cassandra) where speed matters and data loss is tolerable.
 {{< /qa >}}
 
-{{< qa num="17" q="What are the EBS volume types and when do you use each?" level="intermediate" >}}
+{{< qa num="5" q="What are the EBS volume types and when do you use each?" level="intermediate" >}}
 | Volume Type | Category | Max IOPS | Max Throughput | Use Case |
 |-------------|----------|----------|----------------|---------|
 | **gp3** | SSD | 16,000 | 1,000 MB/s | General purpose, boot volumes (default) |
@@ -340,7 +340,7 @@ aws ec2 create-placement-group \
 **gp3 vs gp2:** gp3 is cheaper and allows independent IOPS/throughput configuration. Always prefer gp3 for new volumes.
 {{< /qa >}}
 
-{{< qa num="18" q="What is an IAM Role for EC2 and why is it better than storing access keys?" level="intermediate" >}}
+{{< qa num="6" q="What is an IAM Role for EC2 and why is it better than storing access keys?" level="intermediate" >}}
 An **IAM Role** attached to an EC2 instance grants the instance permissions to call AWS APIs **without storing any credentials** on disk.
 
 **Why better than access keys:**
@@ -366,7 +366,7 @@ aws ec2 associate-iam-instance-profile \
 > Never store `aws_access_key_id` in `.env` or config files on an EC2 instance.
 {{< /qa >}}
 
-{{< qa num="19" q="What is an EC2 Launch Template and how does it differ from a Launch Configuration?" level="intermediate" >}}
+{{< qa num="7" q="What is an EC2 Launch Template and how does it differ from a Launch Configuration?" level="intermediate" >}}
 | Feature | Launch Template | Launch Configuration |
 |---------|----------------|---------------------|
 | **Versioning** | Multiple versions supported | Immutable |
@@ -390,7 +390,7 @@ aws ec2 create-launch-template \
 ```
 {{< /qa >}}
 
-{{< qa num="20" q="What are EC2 Spot Instances and how do you handle interruptions?" level="intermediate" >}}
+{{< qa num="8" q="What are EC2 Spot Instances and how do you handle interruptions?" level="intermediate" >}}
 **Spot Instances** use spare AWS capacity at up to **90% discount**. AWS can reclaim them with a **2-minute warning**.
 
 **Interruption handling best practices:**
@@ -409,7 +409,7 @@ curl -sH "X-aws-ec2-metadata-token: $TOKEN" \
 **Best workloads for Spot:** CI/CD workers, batch processing, ML training, rendering, big data.
 {{< /qa >}}
 
-{{< qa num="21" q="What is EC2 Auto Scaling warm-up and cooldown?" level="intermediate" >}}
+{{< qa num="9" q="What is EC2 Auto Scaling warm-up and cooldown?" level="intermediate" >}}
 **Cooldown Period** — after a scaling activity, ASG waits before triggering another scaling action. Prevents thrashing.
 - Default: **300 seconds**
 - Apply shorter cooldowns for scale-out, longer for scale-in
@@ -433,7 +433,7 @@ aws autoscaling put-lifecycle-hook \
 ```
 {{< /qa >}}
 
-{{< qa num="22" q="What is Elastic Load Balancing and what are the types?" level="intermediate" >}}
+{{< qa num="10" q="What is Elastic Load Balancing and what are the types?" level="intermediate" >}}
 **ELB** distributes incoming traffic across multiple EC2 instances, containers, or Lambda functions.
 
 | Type | Layer | Protocol | Key Feature |
@@ -453,7 +453,7 @@ Host: admin.example.com → Target Group: Admin servers
 **Best practice:** Use **ALB** for web apps and microservices, **NLB** for TCP/UDP services needing extreme performance or fixed IPs.
 {{< /qa >}}
 
-{{< qa num="23" q="What is the EC2 Nitro System?" level="intermediate" >}}
+{{< qa num="11" q="What is the EC2 Nitro System?" level="intermediate" >}}
 The **AWS Nitro System** is the underlying hypervisor platform for all modern EC2 instances. It offloads virtualisation functions to dedicated Nitro hardware.
 
 **Components:**
@@ -471,7 +471,7 @@ The **AWS Nitro System** is the underlying hypervisor platform for all modern EC
 All instances from 5th generation onwards (m5, c5, r5, etc.) run on Nitro.
 {{< /qa >}}
 
-{{< qa num="24" q="How do you take EBS Snapshots and what are best practices?" level="intermediate" >}}
+{{< qa num="12" q="How do you take EBS Snapshots and what are best practices?" level="intermediate" >}}
 **EBS Snapshots** are incremental backups stored in S3 (managed by AWS, not visible in your S3 console).
 
 **Create a snapshot:**
@@ -496,7 +496,7 @@ aws ec2 create-volume \
 ```
 {{< /qa >}}
 
-{{< qa num="25" q="What is Enhanced Networking and when should you enable it?" level="intermediate" >}}
+{{< qa num="13" q="What is Enhanced Networking and when should you enable it?" level="intermediate" >}}
 **Enhanced Networking** uses **SR-IOV** (Single Root I/O Virtualisation) to provide higher bandwidth, higher packet-per-second rates, and lower latency — at no extra cost.
 
 | Technology | Max Bandwidth | Use Case |
@@ -519,7 +519,7 @@ aws ec2 modify-instance-attribute \
 **Use EFA for:** Tightly-coupled MPI workloads and distributed deep learning (PyTorch DDP, Megatron-LM).
 {{< /qa >}}
 
-{{< qa num="26" q="How do you troubleshoot an EC2 instance that fails status checks?" level="advanced" >}}
+{{< qa num="1" q="How do you troubleshoot an EC2 instance that fails status checks?" level="advanced" >}}
 **Two types of status checks:**
 
 **System Status Check** = AWS infrastructure problem (hardware/hypervisor)
@@ -553,7 +553,7 @@ aws ssm start-session --target i-xxx
 ```
 {{< /qa >}}
 
-{{< qa num="27" q="How do you design a highly available EC2 architecture?" level="advanced" >}}
+{{< qa num="2" q="How do you design a highly available EC2 architecture?" level="advanced" >}}
 **Core HA principles:** Eliminate single points of failure, deploy across multiple AZs.
 
 **Reference architecture:**
@@ -582,7 +582,7 @@ Auto Scaling Group   Auto Scaling Group
 - Route 53 health checks for DNS-level failover
 {{< /qa >}}
 
-{{< qa num="28" q="What is EC2 Fleet and how does it differ from Spot Fleet?" level="advanced" >}}
+{{< qa num="3" q="What is EC2 Fleet and how does it differ from Spot Fleet?" level="advanced" >}}
 | Feature | EC2 Fleet | Spot Fleet |
 |---------|-----------|-----------|
 | **Purchase types** | On-Demand + Spot + Reserved | Primarily Spot |
@@ -621,7 +621,7 @@ Auto Scaling Group   Auto Scaling Group
 - `lowest-price` — cheapest pool (higher interruption risk)
 {{< /qa >}}
 
-{{< qa num="29" q="How do you optimise EC2 costs at scale?" level="advanced" >}}
+{{< qa num="4" q="How do you optimise EC2 costs at scale?" level="advanced" >}}
 **Multi-layer cost optimisation strategy:**
 
 **1. Right-Sizing with Compute Optimizer:**
@@ -657,7 +657,7 @@ aws ec2 describe-volumes \
 ```
 {{< /qa >}}
 
-{{< qa num="30" q="What are EC2 Capacity Reservations and how do they differ from Reserved Instances?" level="advanced" >}}
+{{< qa num="5" q="What are EC2 Capacity Reservations and how do they differ from Reserved Instances?" level="advanced" >}}
 | Feature | Capacity Reservation | Reserved Instance |
 |---------|---------------------|-------------------|
 | **Purpose** | Guarantees capacity in an AZ | Billing discount |
@@ -684,7 +684,7 @@ aws ec2 create-capacity-reservation \
 ```
 {{< /qa >}}
 
-{{< qa num="31" q="What is AWS Nitro Enclaves and when would you use it?" level="advanced" >}}
+{{< qa num="6" q="What is AWS Nitro Enclaves and when would you use it?" level="advanced" >}}
 **Nitro Enclaves** are isolated, hardened virtual machines within an EC2 instance for processing **highly sensitive data**.
 
 **Key properties:**
@@ -718,7 +718,7 @@ nitro-cli run-enclave \
 ```
 {{< /qa >}}
 
-{{< qa num="32" q="How does EC2 Auto Scaling integrate with ELB health checks?" level="advanced" >}}
+{{< qa num="7" q="How does EC2 Auto Scaling integrate with ELB health checks?" level="advanced" >}}
 ASG supports two types of health checks:
 
 | Health Check Type | What it checks | When to use |
@@ -747,7 +747,7 @@ aws autoscaling update-auto-scaling-group \
 **Grace period** = time ASG waits before starting health checks on a new instance. Set slightly longer than your application startup time.
 {{< /qa >}}
 
-{{< qa num="33" q="What is EC2 Image Builder and how does it automate AMI management?" level="advanced" >}}
+{{< qa num="8" q="What is EC2 Image Builder and how does it automate AMI management?" level="advanced" >}}
 **EC2 Image Builder** automates the creation, testing, patching, and distribution of AMIs on a schedule.
 
 **Pipeline stages:**
@@ -781,7 +781,7 @@ aws imagebuilder start-image-pipeline-execution \
 ```
 {{< /qa >}}
 
-{{< qa num="34" q="How do you securely connect to EC2 instances without exposing SSH to the internet?" level="advanced" >}}
+{{< qa num="9" q="How do you securely connect to EC2 instances without exposing SSH to the internet?" level="advanced" >}}
 **Three secure access patterns — no inbound port 22 required:**
 
 **1. AWS Systems Manager Session Manager (recommended):**
@@ -820,7 +820,7 @@ ssh -J ec2-user@<bastion-ip> ec2-user@<private-ip>
 | Bastion Host | Required | Port 22 required | Partial |
 {{< /qa >}}
 
-{{< qa num="35" q="What is the difference between vertical and horizontal scaling in EC2?" level="intermediate" >}}
+{{< qa num="10" q="What is the difference between vertical and horizontal scaling in EC2?" level="intermediate" >}}
 | Aspect | Vertical Scaling (Scale Up) | Horizontal Scaling (Scale Out) |
 |--------|-----------------------------|-----------------------------|
 | **Method** | Increase instance size | Add more instances |
@@ -841,7 +841,7 @@ aws ec2 start-instances --instance-ids i-xxx
 **AWS recommendation:** Prefer **horizontal scaling** for resilience. Use vertical scaling only for stateful workloads (e.g., single-node databases) that cannot be distributed.
 {{< /qa >}}
 
-{{< qa num="36" q="How does EC2 burstable performance work (T-series instances)?" level="intermediate" >}}
+{{< qa num="11" q="How does EC2 burstable performance work (T-series instances)?" level="intermediate" >}}
 **T-series instances** (t3, t3a, t4g) earn **CPU credits** when idle and spend them during bursts.
 
 **Credit mechanics:**
@@ -872,7 +872,7 @@ Alert when < 20 credits to prevent throttling
 ```
 {{< /qa >}}
 
-{{< qa num="37" q="What are EC2 instance lifecycle states?" level="basic" >}}
+{{< qa num="12" q="What are EC2 instance lifecycle states?" level="basic" >}}
 An EC2 instance transitions through several states:
 
 ```
@@ -900,7 +900,7 @@ aws ec2 modify-instance-attribute \
 ```
 {{< /qa >}}
 
-{{< qa num="38" q="How do you encrypt an existing unencrypted EBS volume?" level="intermediate" >}}
+{{< qa num="13" q="How do you encrypt an existing unencrypted EBS volume?" level="intermediate" >}}
 You **cannot** directly encrypt an existing unencrypted EBS volume. The process requires a snapshot copy:
 
 **Step-by-step:**
@@ -933,7 +933,7 @@ aws ec2 enable-ebs-encryption-by-default --region us-east-1
 ```
 {{< /qa >}}
 
-{{< qa num="39" q="What is EC2 Serial Console and when do you use it?" level="advanced" >}}
+{{< qa num="14" q="What is EC2 Serial Console and when do you use it?" level="advanced" >}}
 **EC2 Serial Console** provides access to the serial port of an instance — useful when the OS is unresponsive, SSH is broken, or the network is misconfigured.
 
 **Enable at account level:**
@@ -961,7 +961,7 @@ ssh -p 9001 i-xxx.port0@serial-console.ec2-instance-connect.us-east-1.aws
 **Requirements:** Instance must be Nitro-based and have a user password set (or use EC2 Instance Connect key).
 {{< /qa >}}
 
-{{< qa num="40" q="What is Amazon EC2 Auto Scaling predictive scaling?" level="advanced" >}}
+{{< qa num="15" q="What is Amazon EC2 Auto Scaling predictive scaling?" level="advanced" >}}
 **Predictive Scaling** uses ML to forecast future traffic and proactively scales your ASG **before** demand hits.
 
 **How it works:**
@@ -996,7 +996,7 @@ aws autoscaling put-scaling-policy \
 **`SchedulingBufferTime`** — how many seconds before predicted peak to start scaling (allow for instance boot and app warm-up time).
 {{< /qa >}}
 
-{{< qa num="41" q="What is the difference between an ENI, ENA, and EFA?" level="advanced" >}}
+{{< qa num="16" q="What is the difference between an ENI, ENA, and EFA?" level="advanced" >}}
 These are three different EC2 networking concepts — often confused in interviews:
 
 | | ENI | ENA | EFA |
@@ -1014,7 +1014,7 @@ These are three different EC2 networking concepts — often confused in intervie
 **EFA** — optional adapter for HPC workloads using MPI/NCCL. Bypasses the OS kernel for inter-node communication using the SRD protocol.
 {{< /qa >}}
 
-{{< qa num="42" q="What is EC2 Auto Scaling Instance Refresh?" level="advanced" >}}
+{{< qa num="17" q="What is EC2 Auto Scaling Instance Refresh?" level="advanced" >}}
 **Instance Refresh** replaces instances in an ASG in a rolling fashion — useful for updating AMI, instance type, or User Data without manual intervention.
 
 **Trigger a refresh:**
@@ -1049,7 +1049,7 @@ aws autoscaling describe-instance-refreshes \
 ```
 {{< /qa >}}
 
-{{< qa num="43" q="What CloudWatch metrics are available for EC2 by default vs what requires the CloudWatch Agent?" level="intermediate" >}}
+{{< qa num="18" q="What CloudWatch metrics are available for EC2 by default vs what requires the CloudWatch Agent?" level="intermediate" >}}
 **Default metrics (no agent needed) — 5-minute intervals:**
 
 | Metric | Description |
@@ -1077,7 +1077,7 @@ aws ssm send-command \
 ```
 {{< /qa >}}
 
-{{< qa num="44" q="What is EC2 Dedicated Host vs Dedicated Instance?" level="intermediate" >}}
+{{< qa num="19" q="What is EC2 Dedicated Host vs Dedicated Instance?" level="intermediate" >}}
 | Feature | Dedicated Instance | Dedicated Host |
 |---------|-------------------|----------------|
 | **Isolation** | Dedicated hardware, AWS manages placement | Full physical server dedicated to you |
@@ -1101,7 +1101,7 @@ aws ec2 allocate-hosts \
 ```
 {{< /qa >}}
 
-{{< qa num="45" q="How do you perform an instance type change with zero or minimal downtime?" level="advanced" >}}
+{{< qa num="20" q="How do you perform an instance type change with zero or minimal downtime?" level="advanced" >}}
 EC2 does not support hot resizing, but you can achieve **near-zero downtime** using these strategies:
 
 **Strategy 1 — Instance Refresh on ASG (recommended):**
@@ -1135,7 +1135,7 @@ ASG replaces instances in rolling batches, ALB handles traffic shifting automati
 ```
 {{< /qa >}}
 
-{{< qa num="46" q="What are Graviton-based EC2 instances and what are the benefits?" level="advanced" >}}
+{{< qa num="21" q="What are Graviton-based EC2 instances and what are the benefits?" level="advanced" >}}
 **AWS Graviton** processors are ARM64-based chips designed by AWS, offering improved price-performance over x86.
 
 | Dimension | Graviton (ARM64) | Intel / AMD (x86_64) |
@@ -1162,7 +1162,7 @@ aws ec2 modify-launch-template \
 **Best suited for Graviton:** Web services, microservices, containerised apps, Java workloads, open-source databases (MySQL, PostgreSQL, Redis).
 {{< /qa >}}
 
-{{< qa num="47" q="What is EC2 instance tenancy and what are the options?" level="intermediate" >}}
+{{< qa num="22" q="What is EC2 instance tenancy and what are the options?" level="intermediate" >}}
 **Tenancy** controls whether your instance runs on shared or dedicated hardware.
 
 | Tenancy | Hardware | Cost | Use Case |
@@ -1189,7 +1189,7 @@ aws ec2 modify-vpc-tenancy \
 > You can change from `dedicated` to `default` tenancy (stop required), but **not** from `default` to `dedicated` on a running instance.
 {{< /qa >}}
 
-{{< qa num="48" q="How does IAM instance profile differ from an IAM role?" level="intermediate" >}}
+{{< qa num="23" q="How does IAM instance profile differ from an IAM role?" level="intermediate" >}}
 These three terms are technically distinct but often used interchangeably:
 
 ```
@@ -1225,7 +1225,7 @@ aws ec2 associate-iam-instance-profile \
 ```
 {{< /qa >}}
 
-{{< qa num="49" q="What are EC2 Spot capacity pools and how do you pick the right pool?" level="advanced" >}}
+{{< qa num="24" q="What are EC2 Spot capacity pools and how do you pick the right pool?" level="advanced" >}}
 A **Spot capacity pool** is a set of unused EC2 instances of the same instance type in the same AZ. Each pool has its own price and interruption rate.
 
 **Key insight:** Interruption frequency is driven by demand for a specific pool, not just price.
@@ -1254,7 +1254,7 @@ A **Spot capacity pool** is a set of unused EC2 instances of the same instance t
 **4. Avoid pools with less than 5 available instances** — high interruption risk.
 {{< /qa >}}
 
-{{< qa num="50" q="What is EC2 network bandwidth bursting and how does it work?" level="advanced" >}}
+{{< qa num="25" q="What is EC2 network bandwidth bursting and how does it work?" level="advanced" >}}
 Many EC2 instances support **network bandwidth bursting** — they can temporarily exceed their baseline network bandwidth for short periods.
 
 **How it works:**
