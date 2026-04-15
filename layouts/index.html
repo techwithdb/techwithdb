@@ -149,26 +149,26 @@
 <script>
 (function(){
   var awsTools = [
-    { name:'EC2',            desc:'Virtual Compute', icon:'fas fa-server',        col:'#FF9900' },
-    { name:'S3',             desc:'Object Storage',  icon:'fas fa-database',      col:'#FF9900' },
-    { name:'Lambda',         desc:'Serverless',      icon:'fas fa-bolt',          col:'#FF9900' },
-    { name:'VPC',            desc:'Networking',      icon:'fas fa-network-wired', col:'#FF9900' },
-    { name:'RDS',            desc:'Managed DB',      icon:'fas fa-database',      col:'#3B82F6' },
-    { name:'EKS',            desc:'Managed K8s',     icon:'fas fa-dharmachakra',  col:'#FF9900' },
-    { name:'IAM',            desc:'Access Control',  icon:'fas fa-shield-halved', col:'#FF4444' },
-    { name:'CloudFormation', desc:'IaC Templates',   icon:'fas fa-layer-group',   col:'#FF9900' },
-    { name:'Route 53',       desc:'DNS Service',     icon:'fas fa-route',         col:'#FF9900' },
-    { name:'CloudWatch',     desc:'Monitoring',      icon:'fas fa-chart-line',    col:'#FF9900' },
+    { name:'EC2',            desc:'Virtual Compute', icon:'fas fa-server',        col:'#FF9900', url:'/aws/ec2/' },
+    { name:'S3',             desc:'Object Storage',  icon:'fas fa-database',      col:'#FF9900', url:'/aws/s3/' },
+    { name:'Lambda',         desc:'Serverless',      icon:'fas fa-bolt',          col:'#FF9900', url:'/aws/lambda/' },
+    { name:'VPC',            desc:'Networking',      icon:'fas fa-network-wired', col:'#FF9900', url:'/aws/vpc/' },
+    { name:'RDS',            desc:'Managed DB',      icon:'fas fa-database',      col:'#3B82F6', url:'/aws/rds/' },
+    { name:'EKS',            desc:'Managed K8s',     icon:'fas fa-dharmachakra',  col:'#FF9900', url:'/aws/eks/' },
+    { name:'IAM',            desc:'Access Control',  icon:'fas fa-shield-halved', col:'#FF4444', url:'/aws/iam/' },
+    { name:'CloudFormation', desc:'IaC Templates',   icon:'fas fa-layer-group',   col:'#FF9900', url:'/aws/cloudformation/' },
+    { name:'Route 53',       desc:'DNS Service',     icon:'fas fa-route',         col:'#FF9900', url:'/aws/route53/' },
+    { name:'CloudWatch',     desc:'Monitoring',      icon:'fas fa-chart-line',    col:'#FF9900', url:'/aws/cloudwatch/' },
   ];
   var devopsTools = [
-    { name:'Docker',         desc:'Containers',      icon:'fab fa-docker',        col:'#2496ED' },
-    { name:'Kubernetes',     desc:'Orchestration',   icon:'fas fa-dharmachakra',  col:'#326CE5' },
-    { name:'Jenkins',        desc:'CI/CD Pipelines', icon:'fas fa-gears',         col:'#D33833' },
-    { name:'GitHub Actions', desc:'Automation',      icon:'fab fa-github',        col:'#00c8ff' },
-    { name:'Prometheus',     desc:'Metrics',         icon:'fas fa-fire',          col:'#E6522C' },
-    { name:'Grafana',        desc:'Dashboards',      icon:'fas fa-chart-bar',     col:'#F46800' },
-    { name:'Terraform',      desc:'Infrastructure',  icon:'fas fa-cube',          col:'#9580FF' },
-    { name:'Ansible',        desc:'Configuration',   icon:'fas fa-sliders',       col:'#EE0000' },
+    { name:'Docker',         desc:'Containers',      icon:'fab fa-docker',        col:'#2496ED', url:'/devops/docker/' },
+    { name:'Kubernetes',     desc:'Orchestration',   icon:'fas fa-dharmachakra',  col:'#326CE5', url:'/devops/kubernetes/' },
+    { name:'Jenkins',        desc:'CI/CD Pipelines', icon:'fas fa-gears',         col:'#D33833', url:'/devops/jenkins/' },
+    { name:'GitHub Actions', desc:'Automation',      icon:'fab fa-github',        col:'#00c8ff', url:'/devops/github-actions/' },
+    { name:'Prometheus',     desc:'Metrics',         icon:'fas fa-fire',          col:'#E6522C', url:'/devops/prometheus/' },
+    { name:'Grafana',        desc:'Dashboards',      icon:'fas fa-chart-bar',     col:'#F46800', url:'/devops/grafana/' },
+    { name:'Terraform',      desc:'Infrastructure',  icon:'fas fa-cube',          col:'#9580FF', url:'/devops/terraform/' },
+    { name:'Ansible',        desc:'Configuration',   icon:'fas fa-sliders',       col:'#EE0000', url:'/devops/ansible/' },
   ];
   var tickerItems = [
     {icon:'fab fa-aws',name:'AWS'},{icon:'fab fa-docker',name:'Docker'},
@@ -194,7 +194,7 @@
     var c = document.getElementById(id);
     if (!c) return;
     c.innerHTML = tools.map(function(t){
-      return '<a href="#" class="tsc" style="--tc:' + t.col + '">' +
+      return '<a href="' + t.url + '" class="tsc" style="--tc:' + t.col + '">' +
         '<div class="tsc-icon" style="background:' + t.col + '18;border:1px solid ' + t.col + '30;color:' + t.col + '">' +
           '<i class="' + t.icon + '"></i>' +
         '</div>' +
