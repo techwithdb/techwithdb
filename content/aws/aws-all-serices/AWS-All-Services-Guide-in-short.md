@@ -2,6 +2,163 @@
 
 > A comprehensive guide to all major AWS services: categories, use cases, functionality, and real-world integrations.
 
+---
+
+## 📚 Table of Contents
+
+### 🖥️ Compute
+| # | Service |
+|---|---------|
+| 1 | [Amazon EC2](#amazon-ec2) |
+| 2 | [AWS Lambda](#aws-lambda) |
+| 3 | [Amazon ECS](#amazon-ecs) | 
+| 4 | [Amazon EKS](#amazon-eks) | 
+| 5 | [AWS Fargate](#aws-fargate) | 
+| 6 | [AWS Elastic Beanstalk](#aws-elastic-beanstalk) |
+| 7 | [Amazon Lightsail](#amazon-lightsail) |
+| 8 | [AWS Batch](#aws-batch) |
+| 9 | [AWS Outposts](#aws-outposts) |
+| 10 | [AWS App Runner](#aws-app-runner) |
+
+### 🗄️ Storage
+| # | Service |
+|---|---------|
+| 11 | [Amazon S3](#amazon-s3) |
+| 12 | [Amazon EBS](#amazon-ebs) |
+| 13 | [Amazon EFS](#amazon-efs) |
+| 14 | [Amazon S3 Glacier](#amazon-s3-glacier) |
+| 15 | [AWS Storage Gateway](#aws-storage-gateway) |
+| 16 | [Amazon FSx](#amazon-fsx) |
+| 17 | [AWS Backup](#aws-backup) |
+
+### 🛢️ Database
+| # | Service |
+|---|---------|
+| 18 | [Amazon RDS](#amazon-rds) |
+| 19 | [Amazon Aurora](#amazon-aurora) | 
+| 20 | [Amazon DynamoDB](#amazon-dynamodb) |
+| 21 | [Amazon ElastiCache](#amazon-elasticache) | 
+| 22 | [Amazon Redshift](#amazon-redshift) | 
+| 23 | [Amazon DocumentDB](#amazon-documentdb) | 
+| 24 | [Amazon Neptune](#amazon-neptune) | 
+| 25 | [Amazon Keyspaces](#amazon-keyspaces) | 
+| 26 | [Amazon QLDB](#amazon-qldb) | 
+| 27 | [Amazon Timestream](#amazon-timestream) | 
+
+### 🌐 Networking & Content Delivery
+| # | Service | 
+|---|---------|
+| 28 | [Amazon VPC](#amazon-vpc) | 
+| 29 | [Amazon CloudFront](#amazon-cloudfront) | 
+| 30 | [Amazon Route 53](#amazon-route-53) | 
+| 31 | [Amazon API Gateway](#amazon-api-gateway) | 
+| 32 | [Elastic Load Balancing](#elastic-load-balancing) | 
+| 33 | [AWS Direct Connect](#aws-direct-connect) |
+| 34 | [AWS Transit Gateway](#aws-transit-gateway) | 
+| 35 | [AWS Global Accelerator](#aws-global-accelerator) | 
+| 36 | [AWS PrivateLink](#aws-privatelink) | 
+
+### 🔐 Security, Identity & Compliance
+| # | Service | 
+|---|---------|
+| 37 | [AWS IAM](#aws-iam) | 
+| 38 | [Amazon Cognito](#amazon-cognito) | 
+| 39 | [Amazon GuardDuty](#amazon-guardduty) | 
+| 40 | [Amazon Inspector](#amazon-inspector) | 
+| 41 | [Amazon Macie](#amazon-macie) | 
+| 42 | [AWS Shield](#aws-shield) |
+| 43 | [AWS WAF](#aws-waf) |
+| 44 | [AWS KMS](#aws-kms) | 
+| 45 | [AWS Secrets Manager](#aws-secrets-manager) |
+| 46 | [AWS Certificate Manager](#aws-certificate-manager) | 
+| 47 | [AWS Security Hub](#aws-security-hub) | 
+
+### 📊 Analytics
+| # | Service |
+|---|---------|
+| 48 | [Amazon Athena](#amazon-athena) |
+| 49 | [Amazon EMR](#amazon-emr) |
+| 50 | [Amazon Kinesis](#amazon-kinesis) | 
+| 51 | [AWS Glue](#aws-glue) | 
+| 52 | [Amazon QuickSight](#amazon-quicksight) | 
+| 53 | [AWS Lake Formation](#aws-lake-formation) | 
+| 54 | [Amazon MSK](#amazon-msk) | 
+| 55 | [Amazon OpenSearch Service](#amazon-opensearch-service) | 
+
+### 🤖 Machine Learning & AI
+| # | Service | 
+|---|---------|
+| 56 | [Amazon SageMaker](#amazon-sagemaker) | 
+| 57 | [Amazon Rekognition](#amazon-rekognition) |
+| 58 | [Amazon Comprehend](#amazon-comprehend) | 
+| 59 | [Amazon Polly](#amazon-polly) | ML/AI |
+| 60 | [Amazon Transcribe](#amazon-transcribe) |
+| 61 | [Amazon Translate](#amazon-translate) |
+| 62 | [Amazon Lex](#amazon-lex) | 
+| 63 | [Amazon Forecast](#amazon-forecast) | 
+| 64 | [Amazon Personalize](#amazon-personalize) | 
+| 65 | [Amazon Textract](#amazon-textract) | 
+| 66 | [Amazon Bedrock](#amazon-bedrock) |
+
+### 💬 Messaging & Integration
+| # | Service | 
+|---|---------|
+| 67 | [Amazon SNS](#amazon-sns) | 
+| 68 | [Amazon SQS](#amazon-sqs) | 
+| 69 | [Amazon EventBridge](#amazon-eventbridge) | 
+| 70 | [Amazon MQ](#amazon-mq) | 
+| 71 | [Amazon SES](#amazon-ses) | 
+| 72 | [AWS Step Functions](#aws-step-functions) | 
+| 73 | [Amazon AppFlow](#amazon-appflow) | 
+
+### 🛠️ Developer Tools
+| # | Service | 
+|---|---------|
+| 74 | [AWS CodeCommit](#aws-codecommit) |
+| 75 | [AWS CodeBuild](#aws-codebuild) | 
+| 76 | [AWS CodeDeploy](#aws-codedeploy) | 
+| 77 | [AWS CodePipeline](#aws-codepipeline) | 
+| 78 | [AWS Cloud9](#aws-cloud9) | 
+| 79 | [AWS X-Ray](#aws-x-ray) | 
+| 80 | [AWS CloudShell](#aws-cloudshell) |
+| 81 | [Amazon CodeGuru](#amazon-codeguru) | 
+
+### 📋 Management & Governance
+| # | Service |
+|---|---------|
+| 82 | [Amazon CloudWatch](#amazon-cloudwatch) |
+| 83 | [AWS CloudTrail](#aws-cloudtrail) |
+| 84 | [AWS CloudFormation](#aws-cloudformation) |
+| 85 | [AWS Config](#aws-config) |
+| 86 | [AWS Systems Manager](#aws-systems-manager) | 
+| 87 | [AWS Trusted Advisor](#aws-trusted-advisor) | 
+| 88 | [AWS Control Tower](#aws-control-tower) | 
+| 89 | [AWS Organizations](#aws-organizations) | 
+| 90 | [AWS CDK](#aws-cdk) |
+
+### 📡 IoT
+| # | Service | 
+|---|---------|
+| 91 | [AWS IoT Core](#aws-iot-core) | 
+| 92 | [AWS IoT Greengrass](#aws-iot-greengrass) | 
+| 93 | [AWS IoT Analytics](#aws-iot-analytics) |
+| 94 | [AWS IoT SiteWise](#aws-iot-sitewise) | 
+
+### 🚀 Migration & Transfer
+| # | Service | 
+|---|---------|
+| 95 | [AWS Migration Hub](#aws-migration-hub) |
+| 96 | [AWS DMS](#aws-dms) | 
+| 97 | [AWS Snowball](#aws-snowball) | 
+| 98 | [AWS DataSync](#aws-datasync) | 
+
+### 💰 Cost Management
+| # | Service | 
+|---|---------|
+| 99 | [AWS Cost Explorer](#aws-cost-explorer) |
+| 100 | [AWS Budgets](#aws-budgets) | 
+
+---
 
 ## 🖥️ COMPUTE SERVICES
 
