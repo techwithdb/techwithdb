@@ -7,14 +7,14 @@ enableRobotsTXT = true
 enableGitInfo = true
 
 relativeURLs = false
-canonifyURLs = false
+canonifyURLs = true
 
 copyright = "© 2025 TechWithDB. All rights reserved."
 
 [params]
   description  = "Practical AWS & DevOps tutorials — real-world projects, deep dives, and interview prep by Dipak."
   author       = "Dipak"
-  github       = "https://github.com/yourusername"
+  github       = "https://github.com/techwithdb"
   linkedin     = "https://linkedin.com/in/yourprofile"
   twitter      = "https://twitter.com/yourhandle"
   googleFormURL = "https://forms.gle/kC1dEkreGhZB5XR28"
@@ -33,6 +33,10 @@ copyright = "© 2025 TechWithDB. All rights reserved."
   tag      = "tags"
   category = "categories"
   series   = "series"
+
+
+[services.googleAnalytics]
+  ID = "G-MYHTHBEHCG"
 
 # ── Main navigation ──────────────────────────────────────────
 [menu]
