@@ -15,39 +15,39 @@ draft: false
 ## 🟢 Basic
 
 {{< qa num="1" q="What is Docker and why is it used?" level="basic" >}}
-**Docker** is an open-source platform that enables developers to build, package, ship, and run applications inside **containers**. Containers are lightweight, portable, and isolated environments that include everything needed to run an application — code, runtime, libraries, and dependencies.
+**Ans:** **Docker** is a containerization platform that allows us to package an application along with all its dependencies, libraries, and configurations into a single unit called a container.
 
-**Why it's used:**
-- Eliminates "works on my machine" issues
-- Faster deployments and consistent environments
-- Efficient resource usage compared to VMs
-- Easy scaling and orchestration
+The main reason we use Docker is to ensure that the application runs consistently across different environments—like development, testing, and production—without any issues like ‘it works on my machine but not on yours’.
+
+It also helps in faster deployment, better resource utilization compared to virtual machines, and makes scaling applications easier because we can quickly spin up multiple containers when needed.
+
+**For example:** if I build a Docker container for a Node.js app, I can run the same container on my local system, a testing server, or in production, and it will behave exactly the same everywhere.
 {{< /qa >}}
 
 {{< qa num="2" q="What is the difference between a Docker image and a Docker container?" level="basic" >}}
+**Ans:** The main difference between a Docker image and a Docker container is that an image is a template, while a container is a running instance of that template.
+
+- A Docker image is a read-only package that includes the application code, dependencies, libraries, and environment needed to run the application. It doesn’t change and is used to create containers.
+
+- A Docker container, on the other hand, is the actual running environment created from the image. It is live, can be started or stopped, and you can run multiple containers from the same image.
+
+In simple terms, I think of a Docker image as a blueprint and a Docker container as the actual running application created from that blueprint.
+
+
 | | **Image** | **Container** |
 |---|---|---|
 | Definition | Read-only blueprint/template | Running instance of an image |
 | State | Static (immutable) | Dynamic (can be started/stopped/deleted) |
 | Storage | Stored on disk | Lives in memory + writable layer |
 
-```bash
-# Pull an image
-docker pull nginx
-
-# Run a container from the image
-docker run -d --name my-nginx nginx
-
-# List running containers
-docker ps
-
-# List images
-docker images
-```
 {{< /qa >}}
 
 {{< qa num="3" q="What is a Dockerfile and what are its most common instructions?" level="basic" >}}
-A **Dockerfile** is a plain-text script containing instructions that Docker uses to build an image automatically.
+**Ans:** A **Dockerfile** is a script or configuration file that contains a set of instructions to build a Docker image.
+
+In a Dockerfile, we define things like the base image, application code, dependencies, environment variables, and the commands needed to run the application.
+
+So instead of manually setting up everything, we just write a Dockerfile, and Docker automatically builds the image from it. This makes the process consistent, repeatable, and easy to automate.
 
 **Common instructions:**
 
@@ -64,17 +64,14 @@ CMD ["node", "server.js"]    # Default command to run
 {{< /qa >}}
 
 {{< qa num="4" q="How do you build and run a Docker image?" level="basic" >}}
-**Build** an image from a Dockerfile, then **run** a container from it:
+**Ans:** To build a Docker image, we use the **Dockerfile** and run the *docker build* command. This command reads the instructions from the Dockerfile and creates an image.
 
 ```bash
 # Build image (tag it with -t)
 docker build -t my-app:1.0 .
 
 # Run a container
-docker run -d \
-  --name my-app-container \
-  -p 8080:3000 \
-  my-app:1.0
+docker run -d --name my-app-container  -p 8080:3000 my-app:1.0
 
 # -d    = detached (background)
 # -p    = host_port:container_port
@@ -83,7 +80,7 @@ docker run -d \
 {{< /qa >}}
 
 {{< qa num="5" q="What is Docker Hub?" level="basic" >}}
-**Docker Hub** is the default public registry for Docker images. It hosts official images (like `nginx`, `postgres`, `node`) and allows users to publish their own images.
+**Ans:** **Docker Hub** is the default public registry for Docker images. It hosts official images (like `nginx`, `postgres`, `node`) and allows users to publish their own images.
 
 ```bash
 # Login to Docker Hub
@@ -101,6 +98,8 @@ docker pull yourusername/my-app:1.0
 {{< /qa >}}
 
 {{< qa num="6" q="How do you list, stop, and remove containers and images?" level="basic" >}}
+**Ans:**
+
 ```bash
 # --- Containers ---
 docker ps                     # List running containers
@@ -120,35 +119,12 @@ docker system prune -a        # Remove all unused containers, images, networks
 ```
 {{< /qa >}}
 
-{{< qa num="7" q="What is the difference between CMD and ENTRYPOINT in a Dockerfile?" level="basic" >}}
-Both define the command that runs when a container starts, but they behave differently:
-
-| | **CMD** | **ENTRYPOINT** |
-|---|---|---|
-| Purpose | Default arguments (can be overridden) | Fixed executable (cannot be overridden easily) |
-| Override | `docker run image <new-cmd>` replaces it | `docker run image arg` appends to it |
-
-```dockerfile
-# CMD - easily overridden
-CMD ["node", "server.js"]
-
-# ENTRYPOINT - fixed executable
-ENTRYPOINT ["node"]
-CMD ["server.js"]   # default arg, can be overridden
-
-# Run: docker run my-app debug.js
-# → executes: node debug.js
-```
-
-**Best practice:** Use `ENTRYPOINT` for the main executable and `CMD` for default arguments.
-{{< /qa >}}
-
 ---
 
 ## 🟡 Intermediate
 
-{{< qa num="8" q="What is Docker Compose and when would you use it?" level="intermediate" >}}
-**Docker Compose** is a tool for defining and running **multi-container applications** using a single YAML file (`docker-compose.yml`). It's ideal for local development and testing.
+{{< qa num="1" q="What is Docker Compose and when would you use it?" level="intermediate" >}}
+**Ans:** **Docker Compose** is a tool for defining and running **multi-container applications** using a single YAML file (`docker-compose.yml`). It's ideal for local development and testing.
 
 ```yaml
 version: "3.9"
@@ -184,8 +160,14 @@ docker compose ps          # Status of services
 ```
 {{< /qa >}}
 
-{{< qa num="9" q="What are Docker volumes and how do they differ from bind mounts?" level="intermediate" >}}
-Both are mechanisms for persisting data outside a container's lifecycle, but they differ in where data is stored and who manages it.
+{{< qa num="2" q="What are Docker volumes and how do they differ from bind mounts?" level="intermediate" >}}
+**Ans:** **Docker volumes** and **bind mounts** are both used to persist data outside the container, but the main difference is in how they are managed.
+
+- Docker volumes are managed by Docker itself. They are stored in a specific location on the host and are easier to manage, more secure, and work well across different environments. They are generally the preferred way to persist data in production.
+
+- Bind mounts, on the other hand, directly map a file or directory from the host machine into the container. This gives more control, but it also depends on the host’s file structure, so it’s less portable and can cause issues if the path doesn’t exist.
+
+In short, volumes are Docker-managed and more portable, while bind mounts are host-managed and more flexible but less portable
 
 | | **Volume** | **Bind Mount** |
 |---|---|---|
@@ -194,51 +176,33 @@ Both are mechanisms for persisting data outside a container's lifecycle, but the
 | Portability | High | Low |
 | Use case | Production, databases | Local dev, live reload |
 
-```bash
-# --- Volumes ---
-docker volume create my_data
-docker run -v my_data:/app/data my-app
-
-# --- Bind Mounts ---
-docker run -v $(pwd)/src:/app/src my-app
-# or with --mount flag (explicit)
-docker run --mount type=bind,source=$(pwd)/src,target=/app/src my-app
-```
 
 **Tip:** Prefer **volumes** in production; use **bind mounts** in development for live code reload.
 {{< /qa >}}
 
-{{< qa num="10" q="How does Docker networking work? Explain the different network types." level="intermediate" >}}
-Docker provides several network drivers:
+{{< qa num="3" q="How does Docker networking work? Explain the different network types." level="intermediate" >}}
+**Ans:** Docker networking allows containers to communicate with each other, as well as with the host machine and external networks.
 
-| Driver | Description | Use Case |
-|---|---|---|
-| `bridge` | Default isolated network on a single host | Most containers |
-| `host` | Container shares host's network stack | Performance-critical apps |
-| `none` | No networking | Fully isolated tasks |
-| `overlay` | Multi-host networking | Docker Swarm / Kubernetes |
+By default, Docker creates a network so that containers can talk to each other using IP addresses or container names. It basically handles isolation and communication between containers.
 
-```bash
-# Create a custom bridge network
-docker network create my-network
+- Docker Network Types:
+  - Bridge
+  - Host
+  - None
+  - Overlay
 
-# Connect containers to the same network
-docker run -d --network my-network --name api my-api
-docker run -d --network my-network --name db postgres
+| Driver   | Description | Use Case |
+|----------|-------------|----------|
+| `bridge` | This is the default network. Containers on the same bridge network can communicate with each other, and we can expose ports to access them from the host. | Most containers |
+| `host` | the container shares the host’s network directly, so there’s no isolation. It’s faster, but less secure because the container uses the host’s ports. | Performance-critical apps |
+| `none` | In this case, the container has no network access at all. It’s completely isolated. | Fully isolated tasks |
+| `overlay` | This is used in multi-host environments like Docker Swarm. It allows containers running on different machines to communicate with each other. | Docker Swarm / Kubernetes |
 
-# Containers on the same custom network can resolve each other by name
-# Inside 'api' container: ping db  → works!
 
-# List networks
-docker network ls
-
-# Inspect a network
-docker network inspect my-network
-```
 {{< /qa >}}
 
-{{< qa num="11" q="What is a multi-stage build in Docker and why is it useful?" level="intermediate" >}}
-**Multi-stage builds** use multiple `FROM` statements in a single Dockerfile, allowing you to copy only the artifacts you need from earlier stages. This drastically reduces final image size.
+{{< qa num="4" q="What is a multi-stage build in Docker and why is it useful?" level="intermediate" >}}
+**Ans:** **Multi-stage builds** use multiple `FROM` statements in a single Dockerfile, allowing you to copy only the artifacts you need from earlier stages. This drastically reduces final image size.
 
 ```dockerfile
 # --- Stage 1: Build ---
@@ -266,8 +230,8 @@ docker build --target production -t my-app:prod .
 ```
 {{< /qa >}}
 
-{{< qa num="12" q="How do you pass environment variables to a Docker container?" level="intermediate" >}}
-There are multiple ways to inject environment variables:
+{{< qa num="5" q="How do you pass environment variables to a Docker container?" level="intermediate" >}}
+**Ans:** There are multiple ways to inject environment variables:
 
 ```bash
 # 1. Inline with -e
@@ -299,8 +263,8 @@ ENV NODE_ENV=production
 > ⚠️ **Never bake secrets** (passwords, API keys) into images. Use `.env` files, Docker secrets, or a secrets manager like Vault.
 {{< /qa >}}
 
-{{< qa num="13" q="What is the difference between COPY and ADD in a Dockerfile?" level="intermediate" >}}
-Both copy files into the image, but `ADD` has extra functionality:
+{{< qa num="6" q="What is the difference between COPY and ADD in a Dockerfile?" level="intermediate" >}}
+**Ans:** Both copy files into the image, but `ADD` has extra functionality:
 
 | Feature | `COPY` | `ADD` |
 |---|---|---|
@@ -324,7 +288,8 @@ RUN curl -o /tmp/file.zip https://example.com/file.zip
 **Best practice:** Always prefer `COPY` unless you specifically need `ADD`'s extra features.
 {{< /qa >}}
 
-{{< qa num="14" q="How do you inspect and debug a running Docker container?" level="intermediate" >}}
+{{< qa num="7" q="How do you inspect and debug a running Docker container?" level="intermediate" >}}
+**Ans:**
 ```bash
 # Get a shell inside a running container
 docker exec -it <container> /bin/sh     # Alpine/minimal images
@@ -355,8 +320,8 @@ docker diff <container>
 
 ## 🔴 Advanced
 
-{{< qa num="15" q="How does the Docker layer caching system work and how do you optimize it?" level="advanced" >}}
-Docker builds images in **layers** — each instruction in a Dockerfile creates one layer. Layers are cached and reused if the instruction and its context haven't changed.
+{{< qa num="1" q="How does the Docker layer caching system work and how do you optimize it?" level="advanced" >}}
+**Ans:** Docker builds images in **layers** — each instruction in a Dockerfile creates one layer. Layers are cached and reused if the instruction and its context haven't changed.
 
 **Cache invalidation rule:** Once a layer changes, **all subsequent layers are rebuilt**.
 
@@ -389,8 +354,8 @@ RUN --mount=type=cache,target=/root/.npm \
 ```
 {{< /qa >}}
 
-{{< qa num="16" q="What is Docker Swarm and how does it compare to Kubernetes?" level="advanced" >}}
-Both are **container orchestration** platforms, but they differ in complexity and capability:
+{{< qa num="2" q="What is Docker Swarm and how does it compare to Kubernetes?" level="advanced" >}}
+**Ans:** Both are **container orchestration** platforms, but they differ in complexity and capability:
 
 | Feature | **Docker Swarm** | **Kubernetes** |
 |---|---|---|
@@ -423,8 +388,8 @@ docker service update --image my-app:2.0 myapp_web
 - **Kubernetes** → complex microservices, multi-cloud, large engineering teams
 {{< /qa >}}
 
-{{< qa num="17" q="How do you manage secrets securely in Docker?" level="advanced" >}}
-**Never** store secrets as environment variables in images or plain `docker-compose.yml`. Use proper secrets management:
+{{< qa num="3" q="How do you manage secrets securely in Docker?" level="advanced" >}}
+**Ans:** **Never** store secrets as environment variables in images or plain `docker-compose.yml`. Use proper secrets management:
 
 **Option 1: Docker Secrets (Swarm mode)**
 ```bash
@@ -466,7 +431,8 @@ secrets:
 - Audit secret access in production
 {{< /qa >}}
 
-{{< qa num="18" q="What are the security best practices for Docker containers?" level="advanced" >}}
+{{< qa num="4" q="What are the security best practices for Docker containers?" level="advanced" >}}
+**Ans:**
 ```dockerfile
 # 1. Use minimal base images
 FROM alpine:3.19                     # Small attack surface
@@ -507,8 +473,8 @@ docker run \
 ```
 {{< /qa >}}
 
-{{< qa num="19" q="Explain how Docker uses Linux namespaces and cgroups under the hood." level="advanced" >}}
-Docker is not a VM — it uses Linux kernel features to create isolated processes:
+{{< qa num="5" q="Explain how Docker uses Linux namespaces and cgroups under the hood." level="advanced" >}}
+**Ans:** Docker is not a VM — it uses Linux kernel features to create isolated processes:
 
 **Namespaces** — provide isolation of system resources:
 
@@ -549,8 +515,8 @@ docker inspect my-app | grep -A5 GraphDriver
 ```
 {{< /qa >}}
 
-{{< qa num="20" q="How do you perform zero-downtime deployments with Docker?" level="advanced" >}}
-Zero-downtime deployments require a strategy to transition traffic from old containers to new ones without service interruption.
+{{< qa num="6" q="How do you perform zero-downtime deployments with Docker?" level="advanced" >}}
+**Ans:** Zero-downtime deployments require a strategy to transition traffic from old containers to new ones without service interruption.
 
 **Strategy 1: Docker Swarm rolling update**
 ```bash
@@ -605,6 +571,28 @@ kubectl rollout undo deployment/my-app   # Rollback if needed
 ```
 {{< /qa >}}
 
+{{< qa num="7" q="What is the difference between CMD and ENTRYPOINT in a Dockerfile?" level="Advanced" >}}
+**Ans:**
+Both define the command that runs when a container starts, but they behave differently:
 
+| | **CMD** | **ENTRYPOINT** |
+|---|---|---|
+| Purpose | Default arguments (can be overridden) | Fixed executable (cannot be overridden easily) |
+| Override | `docker run image <new-cmd>` replaces it | `docker run image arg` appends to it |
+
+```dockerfile
+# CMD - easily overridden
+CMD ["node", "server.js"]
+
+# ENTRYPOINT - fixed executable
+ENTRYPOINT ["node"]
+CMD ["server.js"]   # default arg, can be overridden
+
+# Run: docker run my-app debug.js
+# → executes: node debug.js
+```
+
+**Best practice:** Use `ENTRYPOINT` for the main executable and `CMD` for default arguments.
+{{< /qa >}}
 
 </div>

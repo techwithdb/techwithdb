@@ -2,7 +2,7 @@
 title: "Docker Complete Guide: Containers from Zero to Production"
 description: "Master Docker with hands-on examples — Dockerfiles, multi-stage builds, Docker Compose, networking, volumes, and production security best practices."
 date: 2024-02-01
-author: "CloudOps Hub"
+author: "DB"
 tags: ["docker", "containers", "devops", "dockerfile", "docker-compose"]
 series: "Docker Mastery"
 level: "Beginner to Advanced"
