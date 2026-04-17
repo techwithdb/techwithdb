@@ -1,7 +1,12 @@
-# ☁️ AWS Services — Complete Reference Guide For AWS Cloud and AWS DevOps Engineer
-
-> A comprehensive guide to all major AWS services: categories, use cases, functionality, and real-world integrations.
-
+---
+title: "AWS Complete Service Guide"
+description: "Cover all AWS Services and explain basic introduction of all services"
+date: 2025-01-20
+author: "DB"
+tags: ["aws", "ec2", "interview", "certification"]
+tool: "aws"
+level: "All Levels"
+question_count: 30
 ---
 
 ## 📚 Table of Contents
