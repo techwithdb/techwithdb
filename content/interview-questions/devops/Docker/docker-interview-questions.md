@@ -69,13 +69,16 @@ CMD ["node", "server.js"]    # Default command to run
 ```bash
 # Build image (tag it with -t)
 docker build -t my-app:1.0 .
+```
 
-# Run a container
+```bash
+
+# Run a docker container
 docker run -d --name my-app-container  -p 8080:3000 my-app:1.0
 
-# -d    = detached (background)
+# -d    = detached mode (Container running in background)
 # -p    = host_port:container_port
-# --name = assign a name
+# --name = assign a name to docker container
 ```
 {{< /qa >}}
 
