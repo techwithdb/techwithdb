@@ -19,7 +19,6 @@ readTime: "18 min read"
 
 Before Kubernetes, running containers at scale was chaotic — containers had to be manually started, monitored, and restarted when they crashed. Kubernetes solves all of this declaratively: you describe the *desired state* of your system, and Kubernetes continuously works to maintain it.
 
-![Kubernetes Architecture](cover.svg)
 
 
 ### Why Kubernetes?
