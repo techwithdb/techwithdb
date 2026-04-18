@@ -1,6 +1,6 @@
 ---
 title: "Docker Interview Questions and Answers"
-description: ""
+description: "All Interview questions related to Docker tool"
 date: 2026-04-07T14:26:30+05:30
 author: "DB"
 tags: []
@@ -120,6 +120,26 @@ docker image prune            # Remove all unused images
 # --- Cleanup everything ---
 docker system prune -a        # Remove all unused containers, images, networks
 ```
+{{< /qa >}}
+
+{{< qa num="6" q="Explain the components of Docker?" level="basic" >}}
+
+**Ans:** There are following components:
+1. **Docker Engine**: Also known as the Docker daemon, this is the core of Docker. It is a lightweight runtime and an efficient, scalable and secure containerization technology combined with a work flow for building and containerizing your applications.
+
+2. **Docker CLI:** The Docker command-line interface (CLI) is used to interact with Docker. It allows you to build, run, and manage Docker containers and images.
+
+3. **Dockerfile:** A Dockerfile is a text file that contains instructions for building a Docker image. It defines the environment in which the application will run, including the base image, dependencies, and runtime configuration.
+
+4. **Docker Images:** Images are read-only templates that contain the necessary operating system, application, and runtime components. They serve as the basis for containers. You can create your own images or use pre-built images from the Docker Hub or other registries.
+
+5. **Docker Containers:** Containers are instances of Docker images. They are lightweight and portable encapsulations of an environment in which to run applications. Containers are isolated from each other and from the host system. They can be started, stopped, and deleted, and their resources can be dynamically allocated.
+
+6. **Docker Compose:** Docker Compose is a tool for defining and running multi-container Docker applications. It uses a YAML file to define services, networks, and volumes
+
+7. **Docker Swarm:** Docker Swarm is a native clustering and orchestration tool for Docker. It allows you to create and manage a cluster of Docker nodes, and to deploy and manage services across the cluster.
+
+8. **Docker Hub:** Docker Hub is the official registry for Docker images. It allows you to find, store, and share Docker images.
 {{< /qa >}}
 
 ---
