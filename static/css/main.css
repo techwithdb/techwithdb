@@ -899,3 +899,7 @@ code, pre { font-family: 'Fira Code', monospace; }
   object-fit: cover;
   display: block;
 }
+
+.mermaid {
+  font-size: 16px;
+}

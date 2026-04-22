@@ -28,6 +28,7 @@ copyright = "© 2025 TechWithDB. All rights reserved."
     tabWidth       = 2
   [markup.goldmark.renderer]
     unsafe = true        # allow raw HTML in Markdown
+ 
 
 [taxonomies]
   tag      = "tags"
