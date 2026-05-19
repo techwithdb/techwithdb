@@ -14,82 +14,8 @@ draft: "false"
 
 > **45+ scenario-based questions · Real-world answers · Production patterns · HCL code snippets**
 
----
 
-## 📋 Table of Contents
-
-| # | Category | Questions |
-|---|----------|-----------|
-| 1 | [🏗️ Core Terraform Concepts](#️-core-terraform-concepts) | Q1 – Q6 |
-| 2 | [☁️ AWS Infrastructure Provisioning](#️-aws-infrastructure-provisioning) | Q7 – Q13 |
-| 3 | [🗄️ State Management](#️-state-management) | Q14 – Q18 |
-| 4 | [📦 Modules & Reusability](#-modules--reusability) | Q19 – Q22 |
-| 5 | [🔒 Security & IAM](#-security--iam) | Q23 – Q27 |
-| 6 | [🌐 Networking & VPC](#-networking--vpc) | Q28 – Q31 |
-| 7 | [🚀 CI/CD & Automation](#-cicd--automation) | Q32 – Q36 |
-| 8 | [🔧 Troubleshooting](#-troubleshooting) | Q37 – Q41 |
-| 9 | [⚡ Advanced Patterns](#-advanced-patterns) | Q42 – Q45 |
-| 10 | [📋 Quick Reference Cheatsheet](#-quick-reference-cheatsheet) | — |
-
----
-
-Terraform Questions List
-
-1. Your team is new to Terraform. A colleague asks: *"What is Terraform and why should we use it over CloudFormation for our AWS infrastructure?"
-2. Your manager wants to understand what `terraform plan` does before you run `terraform apply` on production AWS.
-3. You need to create an EC2 instance and an S3 bucket using Terraform. Write the basic configuration.
-4. You need to provision 5 identical EC2 instances. You don't want to copy-paste the same resource block 5 times.
-5. You need to output the public IP of a created EC2 instance so other teams can use it.
-6. You have an RDS instance that was created manually in AWS. You want to bring it under Terraform management without recreating it.
-7. Deploy a web app with ALB, Auto Scaling Group, and EC2 instances across 3 AZs.
-8. Provision an RDS PostgreSQL in a private subnet with a read replica. Password must NOT be hardcoded.
-9. Deploy a Lambda function with API Gateway trigger and IAM permissions to read from DynamoDB.
-10. Your team needs a production EKS cluster with managed node groups in private subnets.
-11. Deploy a static website on S3 with CloudFront CDN and HTTPS.
-12. Your app needs a Redis caching layer. Provision an ElastiCache Redis cluster in private subnets.
-13. Build an event-driven pipeline where SNS fans out to multiple SQS queues.
-14. Your team has 3 engineers all running Terraform locally and state files are getting corrupted.
-15. A Terraform apply failed halfway and now the state is locked. Your colleague can't run any Terraform commands.
-16. You want to manage dev, staging, and prod environments with the same Terraform code but separate state files
-17. Your networking team manages the VPC. Your app team manages EC2. How do they share subnet IDs?
-18. Someone accidentally deleted the production state file. How do you recover?
-19. You have 10 microservices, each needing an ECS service, IAM role, and CloudWatch log group. Copy-pasting Terraform code 10 times is unmanageable.
-20. You want to use a community VPC module instead of writing one from scratch.
-21.  Your module needs to deploy resources in a specific AWS region passed by the caller.
-22. Your platform team wants to publish an internal Terraform module that all app teams can use with versioning.
-23. A developer hardcoded AWS access keys in a Terraform file and pushed to GitHub.
-24. Security team requires least-privilege IAM policies. EC2 instance should only read from a specific S3 bucket.
-25. You need to prevent a critical production RDS instance from being accidentally destroyed via `terraform destroy`
-26. Your app needs multiple secrets (DB password, API keys, JWT secret). How do you manage them without hardcoding?
-27. Your compliance team requires AWS Config and CloudTrail to be enabled in all accounts.
-28. Build a production VPC from scratch with public and private subnets, NAT gateways, and an internet gateway.
-29. ALB accepts internet traffic. App server only accepts from ALB. DB only accepts from App server.
-30. Your app VPC needs to connect to a shared-services VPC that hosts internal tools.
-31. You have 10 VPCs that all need to talk to each other. VPC peering becomes unmanageable (n*(n-1)/2 connections).
-32. On PRs run `terraform plan` and post as comment. On merge to main, run `terraform apply`.
-33. Configure the AWS IAM role that GitHub Actions can assume via OIDC without static access keys.
-34. Your organization has separate AWS accounts for dev and prod. How do you manage both from one Terraform pipeline?
-35. You want to enforce quality gates on all Terraform PRs automatically.
-36. Your manager wants to be alerted when someone manually changes AWS resources outside of Terraform.
-37. Terraform plan shows it wants to delete and recreate a production EC2 because someone manually changed its instance type in the console.
-38. You get `Error: Cycle: aws_security_group.app, aws_security_group.db`. What does this mean and how do you fix it?
-39. Terraform plan says it will "destroy" a resource that was already manually deleted from AWS.
-40. You want to apply changes only to a specific resource without touching the rest of your infrastructure.
-41. Terraform apply is failing with a cryptic error. How do you get more detail?
-42. You need a security group with a variable number of ingress rules per environment. Dev needs 3, prod needs 7.
-43. Your organization has 15 AWS accounts. Managing backends and provider configs is getting unmanageable.
-44. Deploy the same infrastructure to us-east-1 and eu-west-1 using the same code.
-45. What is the difference between `terraform taint` and `terraform apply -replace`?
-
----
-
-## 🏗️ Core Terraform Concepts
-
----
-
-### Q1 — What is Terraform and why use it over AWS CloudFormation?
-
-> 🎯 **Scenario:** Your team is new to Terraform. A colleague asks: *"What is Terraform and why should we use it over CloudFormation for our AWS infrastructure?"*
+{{< qa num="1" q="Your team is new to Terraform. A colleague asks: What is Terraform and why should we use it over CloudFormation for our AWS infrastructure?" level="basic" >}}
 
 **Answer:**
 
@@ -106,12 +32,8 @@ Terraform is an open-source Infrastructure-as-Code (IaC) tool by HashiCorp that 
 
 > 💡 **Key difference:** CloudFormation is AWS-only. Terraform is cloud-agnostic — the same patterns work on AWS, Azure, GCP, and 300+ providers simultaneously.
 
----
-
-### Q2 — Explain the Terraform lifecycle
-
-> 🎯 **Scenario:** Your manager wants to understand what `terraform plan` does before you run `terraform apply` on production AWS.
-
+{{< /qa >}}
+{{< qa num="2" q="Your manager wants to understand what terraform plan does before you run terraform apply on production AWS." level="basic" >}}
 **Answer:**
 
 The Terraform workflow has four key phases:
@@ -140,12 +62,8 @@ terraform destroy
 
 > ✅ **Best practice:** Always use `terraform plan -out=tfplan` then `terraform apply tfplan` in production — this ensures exactly what was reviewed gets applied, even if infra changes between plan and apply.
 
----
-
-### Q3 — Create an EC2 instance and S3 bucket using Terraform
-
-> 🎯 **Scenario:** You need to create an EC2 instance and an S3 bucket using Terraform. Write the basic configuration.
-
+{{< /qa >}}
+{{< qa num="3" q="You need to create an EC2 instance and an S3 bucket using Terraform. Write the basic configuration." level="basic" >}}
 **Answer:**
 
 ```hcl
@@ -231,12 +149,8 @@ variable "environment" {
 }
 ```
 
----
-
-### Q4 — Create multiple EC2 instances without copy-pasting
-
-> 🎯 **Scenario:** You need to provision 5 identical EC2 instances. You don't want to copy-paste the same resource block 5 times.
-
+{{< /qa >}}
+{{< qa num="4" q="You need to provision 5 identical EC2 instances. You don't want to copy-paste the same resource block 5 times." level="basic" >}}
 **Answer:**
 
 Use **`count`** or **`for_each`** meta-arguments:
@@ -278,12 +192,8 @@ resource "aws_instance" "servers" {
 
 > 💡 **Prefer `for_each` over `count`** — if you remove an item from the middle of a count list, Terraform renumbers everything and may destroy/recreate resources. `for_each` uses stable keys.
 
----
-
-### Q5 — Expose EC2 public IP and S3 bucket name as outputs
-
-> 🎯 **Scenario:** You need to output the public IP of a created EC2 instance so other teams can use it.
-
+{{< /qa >}}
+{{< qa num="5" q="You need to output the public IP of a created EC2 instance so other teams can use it." level="basic" >}}
 **Answer:**
 
 ```hcl
@@ -317,11 +227,8 @@ terraform output -raw ec2_public_ip
 terraform output -json
 ```
 
----
-
-### Q6 — Import an existing RDS instance into Terraform
-
-> 🎯 **Scenario:** You have an RDS instance that was created manually in AWS. You want to bring it under Terraform management without recreating it.
+{{< /qa >}}
+{{< qa num="6" q="You have an RDS instance that was created manually in AWS. You want to bring it under Terraform management without recreating it." level="intermediate" >}}
 
 **Answer:**
 
@@ -347,17 +254,8 @@ import {
   id = "my-production-db"
 }
 ```
-
----
-
-## ☁️ AWS Infrastructure Provisioning
-
----
-
-### Q7 — Deploy a highly available web app with ALB + ASG across multiple AZs
-
-> 🎯 **Scenario:** Deploy a web app with ALB, Auto Scaling Group, and EC2 instances across 3 AZs.
-
+{{< /qa >}}
+{{< qa num="7" q="Deploy a web app with ALB, Auto Scaling Group, and EC2 instances across 3 AZs." level="advanced" >}}
 **Answer:**
 
 ```hcl
@@ -436,13 +334,8 @@ resource "aws_lb_listener" "https" {
   }
 }
 ```
-
----
-
-### Q8 — Provision RDS PostgreSQL with read replica (no hardcoded passwords)
-
-> 🎯 **Scenario:** Provision an RDS PostgreSQL in a private subnet with a read replica. Password must NOT be hardcoded.
-
+{{< /qa >}}
+{{< qa num="8" q="Provision an RDS PostgreSQL in a private subnet with a read replica. Password must NOT be hardcoded." level="advanced" >}}
 **Answer:**
 
 ```hcl
@@ -486,12 +379,8 @@ resource "aws_db_instance" "replica" {
 
 > 🚨 **Never** store database passwords in `terraform.tfvars` or hardcode them in HCL. Terraform state stores values in plaintext — always enable encryption on your S3 state backend.
 
----
-
-### Q9 — Deploy Lambda + API Gateway + DynamoDB IAM
-
-> 🎯 **Scenario:** Deploy a Lambda function with API Gateway trigger and IAM permissions to read from DynamoDB.
-
+{{< /qa >}}
+{{< qa num="9" q="Deploy a Lambda function with API Gateway trigger and IAM permissions to read from DynamoDB." level="advanced" >}}
 **Answer:**
 
 ```hcl
@@ -560,12 +449,8 @@ resource "aws_lambda_permission" "apigw" {
 }
 ```
 
----
-
-### Q10 — Deploy EKS Cluster with managed node groups
-
-> 🎯 **Scenario:** Your team needs a production EKS cluster with managed node groups in private subnets.
-
+{{< /qa >}}
+{{< qa num="10" q="Your team needs a production EKS cluster with managed node groups in private subnets." level="advanced" >}}
 **Answer:**
 
 ```hcl
@@ -635,12 +520,8 @@ resource "aws_eks_node_group" "main" {
 }
 ```
 
----
-
-### Q11 — Set up CloudFront CDN in front of S3 static website
-
-> 🎯 **Scenario:** Deploy a static website on S3 with CloudFront CDN and HTTPS.
-
+{{< /qa >}}
+{{< qa num="11" q="Deploy a static website on S3 with CloudFront CDN and HTTPS." level="intermediate" >}}
 **Answer:**
 
 ```hcl
@@ -697,12 +578,8 @@ resource "aws_cloudfront_distribution" "website" {
 }
 ```
 
----
-
-### Q12 — Provision ElastiCache Redis cluster
-
-> 🎯 **Scenario:** Your app needs a Redis caching layer. Provision an ElastiCache Redis cluster in private subnets.
-
+{{< /qa >}}
+{{< qa num="12" q="Your app needs a Redis caching layer. Provision an ElastiCache Redis cluster in private subnets." level="advanced" >}}
 **Answer:**
 
 ```hcl
@@ -732,12 +609,8 @@ output "redis_endpoint" {
 }
 ```
 
----
-
-### Q13 — Set up SQS + SNS for event-driven architecture
-
-> 🎯 **Scenario:** Build an event-driven pipeline where SNS fans out to multiple SQS queues.
-
+{{< /qa >}}
+{{< qa num="13" q="Build an event-driven pipeline where SNS fans out to multiple SQS queues." level="intermediate" >}}
 **Answer:**
 
 ```hcl
@@ -788,16 +661,8 @@ resource "aws_sqs_queue_policy" "orders" {
 }
 ```
 
----
-
-## 🗄️ State Management
-
----
-
-### Q14 — Fix corrupted state when multiple engineers run Terraform locally
-
-> 🎯 **Scenario:** Your team has 3 engineers all running Terraform locally and state files are getting corrupted.
-
+{{< /qa >}}
+{{< qa num="14" q="Your team has 3 engineers all running Terraform locally and state files are getting corrupted." level="intermediate" >}}
 **Answer:**
 
 Configure a **remote backend** using S3 + DynamoDB for centralized state storage and locking:
@@ -856,12 +721,8 @@ resource "aws_dynamodb_table" "tf_lock" {
 | S3 Encryption | Encrypts state file at rest (contains sensitive data) |
 | DynamoDB Table | Provides state locking — prevents concurrent applies |
 
----
-
-### Q15 — Fix a stuck state lock after a failed apply
-
-> 🎯 **Scenario:** A Terraform apply failed halfway and now the state is locked. Your colleague can't run any Terraform commands.
-
+{{< /qa >}}
+{{< qa num="15" q="A Terraform apply failed halfway and now the state is locked. Your colleague can't run any Terraform commands." level="intermediate" >}}
 **Answer:**
 
 ```bash
@@ -884,12 +745,8 @@ aws dynamodb delete-item \
 
 After unlocking, run `terraform plan` to see the current state. Use `terraform refresh` to sync state with actual AWS resources.
 
----
-
-### Q16 — Manage dev, staging, prod with separate state files
-
-> 🎯 **Scenario:** You want to manage dev, staging, and prod environments with the same Terraform code but separate state files.
-
+{{< /qa >}}
+{{< qa num="16" q="You want to manage dev, staging, and prod environments with the same Terraform code but separate state files." level="intermediate" >}}
 **Answer:**
 
 **Option 1 — Terraform Workspaces (simple scenarios):**
@@ -933,12 +790,8 @@ infra/
 
 > ✅ **For production at scale**, use directory-per-environment. It provides complete isolation, different IAM roles per env, and prevents accidentally applying dev config to prod.
 
----
-
-### Q17 — Share VPC outputs between Terraform configurations
-
-> 🎯 **Scenario:** Your networking team manages the VPC. Your app team manages EC2. How do they share subnet IDs?
-
+{{< /qa >}}
+{{< qa num="17" q="Your networking team manages the VPC. Your app team manages EC2. How do they share subnet IDs?" level="intermediate" >}}
 **Answer:**
 
 Use **remote state data sources** to read outputs from another Terraform state file:
@@ -969,12 +822,8 @@ resource "aws_instance" "app" {
 
 > 💡 **Alternative:** Use AWS SSM Parameter Store or `aws_vpc` data sources with tag filters to reduce tight coupling between state files.
 
----
-
-### Q18 — Recover from a corrupted or accidentally deleted state file
-
-> 🎯 **Scenario:** Someone accidentally deleted the production state file. How do you recover?
-
+{{< /qa >}}
+{{< qa num="18" q="Someone accidentally deleted the production state file. How do you recover?" level="advanced" >}}
 **Answer:**
 
 ```bash
@@ -1003,12 +852,8 @@ terraform plan  # Should show no unexpected changes
 
 ## 📦 Modules & Reusability
 
----
-
-### Q19 — Create a reusable module for 10 microservices
-
-> 🎯 **Scenario:** You have 10 microservices, each needing an ECS service, IAM role, and CloudWatch log group. Copy-pasting Terraform code 10 times is unmanageable.
-
+{{< /qa >}}
+{{< qa num="19" q="You have 10 microservices, each needing an ECS service, IAM role, and CloudWatch log group. Copy-pasting Terraform code 10 times is unmanageable." level="intermediate" >}}
 **Answer:**
 
 Create a **reusable Terraform module:**
@@ -1070,12 +915,8 @@ module "services" {
 }
 ```
 
----
-
-### Q20 — Use a community VPC module from Terraform Registry
-
-> 🎯 **Scenario:** You want to use a community VPC module instead of writing one from scratch.
-
+{{< /qa >}}
+{{< qa num="20" q="You want to use a community VPC module instead of writing one from scratch." level="basic" >}}
 **Answer:**
 
 ```hcl
@@ -1107,12 +948,8 @@ resource "aws_instance" "web" {
 
 > ⚠️ **Always pin module versions** with `version = "~> 5.1"`. Without a pin, `terraform init -upgrade` might pull a breaking major version change.
 
----
-
-### Q21 — Pass providers into modules for multi-region deployments
-
-> 🎯 **Scenario:** Your module needs to deploy resources in a specific AWS region passed by the caller.
-
+{{< /qa >}}
+{{< qa num="21" q="Your module needs to deploy resources in a specific AWS region passed by the caller." level="intermediate" >}}
 **Answer:**
 
 ```hcl
@@ -1153,12 +990,8 @@ module "app_eu" {
 }
 ```
 
----
-
-### Q22 — Publish and version a private Terraform module
-
-> 🎯 **Scenario:** Your platform team wants to publish an internal Terraform module that all app teams can use with versioning.
-
+{{< /qa >}}
+{{< qa num="22" q="Your platform team wants to publish an internal Terraform module that all app teams can use with versioning." level="advanced" >}}
 **Answer:**
 
 Use a **Git tag-based versioning** pattern with a private Git registry:
@@ -1191,16 +1024,8 @@ module "rds" {
 }
 ```
 
----
-
-## 🔒 Security & IAM
-
----
-
-### Q23 — Handle hardcoded AWS keys pushed to GitHub
-
-> 🎯 **Scenario:** A developer hardcoded AWS access keys in a Terraform file and pushed to GitHub.
-
+{{< /qa >}}
+{{< qa num="23" q="A developer hardcoded AWS access keys in a Terraform file and pushed to GitHub." level="advanced" >}}
 **Answer:**
 
 **Immediate response:**
@@ -1230,12 +1055,8 @@ gitleaks detect --source .
 
 > 🚨 **The AWS provider should NEVER have `access_key` or `secret_key` hardcoded.** Add `*.tfvars` and `.env` to `.gitignore`. Use environment variables, AWS profiles, or IAM roles.
 
----
-
-### Q24 — Create least-privilege IAM role for EC2 → S3 read access
-
-> 🎯 **Scenario:** Security team requires least-privilege IAM policies. EC2 instance should only read from a specific S3 bucket.
-
+{{< /qa >}}
+{{< qa num="24" q="Security team requires least-privilege IAM policies. EC2 instance should only read from a specific S3 bucket." level="advanced" >}}
 **Answer:**
 
 ```hcl
@@ -1289,12 +1110,8 @@ resource "aws_instance" "web" {
 }
 ```
 
----
-
-### Q25 — Prevent accidental destruction of production RDS
-
-> 🎯 **Scenario:** You need to prevent a critical production RDS instance from being accidentally destroyed via `terraform destroy`.
-
+{{< /qa >}}
+{{< qa num="25" q="You need to prevent a critical production RDS instance from being accidentally destroyed via terraform destroy." level="intermediate" >}}
 **Answer:**
 
 ```hcl
@@ -1332,12 +1149,8 @@ resource "aws_security_group" "web" {
 | `ignore_changes` | Ignore drift in specified attributes |
 | `replace_triggered_by` | Force replacement when another resource changes |
 
----
-
-### Q26 — Manage secrets securely in Terraform
-
-> 🎯 **Scenario:** Your app needs multiple secrets (DB password, API keys, JWT secret). How do you manage them without hardcoding?
-
+{{< /qa >}}
+{{< qa num="26" q="Your app needs multiple secrets (DB password, API keys, JWT secret). How do you manage them without hardcoding?" level="advanced" >}}
 **Answer:**
 
 ```hcl
@@ -1375,12 +1188,8 @@ resource "aws_instance" "app" {
 }
 ```
 
----
-
-### Q27 — Enable AWS Config + CloudTrail via Terraform for compliance
-
-> 🎯 **Scenario:** Your compliance team requires AWS Config and CloudTrail to be enabled in all accounts.
-
+{{< /qa >}}
+{{< qa num="27" q="Your compliance team requires AWS Config and CloudTrail to be enabled in all accounts." level="advanced" >}}
 **Answer:**
 
 ```hcl
@@ -1427,16 +1236,8 @@ resource "aws_config_configuration_recorder_status" "main" {
 }
 ```
 
----
-
-## 🌐 Networking & VPC
-
----
-
-### Q28 — Build a production VPC with public/private subnets across 3 AZs
-
-> 🎯 **Scenario:** Build a production VPC from scratch with public and private subnets, NAT gateways, and an internet gateway.
-
+{{< /qa >}}
+{{< qa num="28" q="Build a production VPC from scratch with public and private subnets, NAT gateways, and an internet gateway." level="advanced" >}}
 **Answer:**
 
 ```hcl
@@ -1524,12 +1325,8 @@ resource "aws_route_table_association" "private" {
 }
 ```
 
----
-
-### Q29 — Create security groups with layered access (ALB → App → DB)
-
-> 🎯 **Scenario:** ALB accepts internet traffic. App server only accepts from ALB. DB only accepts from App server.
-
+{{< /qa >}}
+{{< qa num="29" q="ALB accepts internet traffic. App server only accepts from ALB. DB only accepts from App server." level="advanced" >}}
 **Answer:**
 
 ```hcl
@@ -1575,12 +1372,8 @@ resource "aws_security_group" "db" {
 }
 ```
 
----
-
-### Q30 — Set up VPC Peering between two VPCs
-
-> 🎯 **Scenario:** Your app VPC needs to connect to a shared-services VPC that hosts internal tools.
-
+{{< /qa >}}
+{{< qa num="30" q="Your app VPC needs to connect to a shared-services VPC that hosts internal tools." level="intermediate" >}}
 **Answer:**
 
 ```hcl
@@ -1607,12 +1400,8 @@ resource "aws_route" "shared_to_app" {
 }
 ```
 
----
-
-### Q31 — Set up AWS Transit Gateway for hub-and-spoke networking
-
-> 🎯 **Scenario:** You have 10 VPCs that all need to talk to each other. VPC peering becomes unmanageable (n*(n-1)/2 connections).
-
+{{< /qa >}}
+{{< qa num="31" q="You have 10 VPCs that all need to talk to each other. VPC peering becomes unmanageable (n*(n-1)/2 connections)." level="advanced" >}}
 **Answer:**
 
 ```hcl
@@ -1647,16 +1436,8 @@ resource "aws_route" "app_to_tgw" {
 }
 ```
 
----
-
-## 🚀 CI/CD & Automation
-
----
-
-### Q32 — Automate Terraform with GitHub Actions (plan on PR, apply on merge)
-
-> 🎯 **Scenario:** On PRs run `terraform plan` and post as comment. On merge to main, run `terraform apply`.
-
+{{< /qa >}}
+{{< qa num="32" q="On PRs run terraform plan and post as comment. On merge to main, run terraform apply." level="intermediate" >}}
 **Answer:**
 
 ```yaml
@@ -1723,12 +1504,8 @@ jobs:
 
 > ✅ Use **OIDC authentication** instead of storing AWS access keys as GitHub secrets. The IAM role trusts GitHub's identity token, making key rotation unnecessary.
 
----
-
-### Q33 — Set up OIDC so GitHub Actions can assume an AWS IAM role
-
-> 🎯 **Scenario:** Configure the AWS IAM role that GitHub Actions can assume via OIDC without static access keys.
-
+{{< /qa >}}
+{{< qa num="33" q="Configure the AWS IAM role that GitHub Actions can assume via OIDC without static access keys." level="advanced" >}}
 **Answer:**
 
 ```hcl
@@ -1771,12 +1548,8 @@ resource "aws_iam_role_policy_attachment" "terraform_permissions" {
 }
 ```
 
----
-
-### Q34 — Use Terraform with multiple AWS accounts (dev/prod separation)
-
-> 🎯 **Scenario:** Your organization has separate AWS accounts for dev and prod. How do you manage both from one Terraform pipeline?
-
+{{< /qa >}}
+{{< qa num="34" q="Your organization has separate AWS accounts for dev and prod. How do you manage both from one Terraform pipeline?" level="advanced" >}}
 **Answer:**
 
 ```hcl
@@ -1812,12 +1585,8 @@ module "app_prod" {
 }
 ```
 
----
-
-### Q35 — Enforce Terraform code quality in CI (tflint, checkov, fmt)
-
-> 🎯 **Scenario:** You want to enforce quality gates on all Terraform PRs automatically.
-
+{{< /qa >}}
+{{< qa num="35" q="You want to enforce quality gates on all Terraform PRs automatically." level="intermediate" >}}
 **Answer:**
 
 ```yaml
@@ -1864,12 +1633,8 @@ jobs:
           scan-ref: .
 ```
 
----
-
-### Q36 — Implement drift detection in production
-
-> 🎯 **Scenario:** Your manager wants to be alerted when someone manually changes AWS resources outside of Terraform.
-
+{{< /qa >}}
+{{< qa num="36" q="Your manager wants to be alerted when someone manually changes AWS resources outside of Terraform." level="advanced" >}}
 **Answer:**
 
 ```yaml
@@ -1915,15 +1680,10 @@ jobs:
             })
 ```
 
----
 
-## 🔧 Troubleshooting
 
----
-
-### Q37 — Handle infrastructure drift (manual changes in AWS console)
-
-> 🎯 **Scenario:** Terraform plan shows it wants to delete and recreate a production EC2 because someone manually changed its instance type in the console.
+{{< /qa >}}
+{{< qa num="37" q="Terraform plan shows it wants to delete and recreate a production EC2 because someone manually changed its instance type in the console." level="advanced" >}}
 
 **Answer:**
 
@@ -1953,12 +1713,8 @@ resource "aws_instance" "web" {
   }
 }
 ```
-
----
-
-### Q38 — Fix Terraform cycle errors
-
-> 🎯 **Scenario:** You get `Error: Cycle: aws_security_group.app, aws_security_group.db`. What does this mean and how do you fix it?
+{{< /qa >}}
+{{< qa num="38" q="You get Error: Cycle: aws_security_group.app, aws_security_group.db. What does this mean and how do you fix it?" level="advanced" >}}
 
 **Answer:**
 
@@ -1996,12 +1752,8 @@ resource "aws_security_group_rule" "db_from_app" {
 }
 ```
 
----
-
-### Q39 — Clean up orphaned resources from state
-
-> 🎯 **Scenario:** Terraform plan says it will "destroy" a resource that was already manually deleted from AWS.
-
+{{< /qa >}}
+{{< qa num="39" q="Terraform plan says it will destroy a resource that was already manually deleted from AWS." level="intermediate" >}}
 **Answer:**
 
 ```bash
@@ -2027,12 +1779,8 @@ terraform plan
 | `terraform state pull` | Download remote state to local for inspection |
 | `terraform state push` | Upload modified state back to remote |
 
----
-
-### Q40 — Apply changes to specific resources only (targeted apply)
-
-> 🎯 **Scenario:** You want to apply changes only to a specific resource without touching the rest of your infrastructure.
-
+{{< /qa >}}
+{{< qa num="40" q="You want to apply changes only to a specific resource without touching the rest of your infrastructure." level="intermediate" >}}
 **Answer:**
 
 ```bash
@@ -2056,12 +1804,8 @@ terraform destroy -target=aws_instance.old_server
 
 > ⚠️ Use `-target` sparingly — it can leave your state out of sync. Always run a full `terraform plan` after targeted operations.
 
----
-
-### Q41 — Debug Terraform errors with verbose logging
-
-> 🎯 **Scenario:** Terraform apply is failing with a cryptic error. How do you get more detail?
-
+{{< /qa >}}
+{{< qa num="41" q="Terraform apply is failing with a cryptic error. How do you get more detail?" level="basic" >}}
 **Answer:**
 
 ```bash
@@ -2093,16 +1837,8 @@ terraform graph | dot -Tsvg > graph.svg    # Visualize dependency graph
 ["subnet-abc", "subnet-def", "subnet-ghi"]
 ```
 
----
-
-## ⚡ Advanced Patterns
-
----
-
-### Q42 — Use dynamic blocks for variable security group rules
-
-> 🎯 **Scenario:** You need a security group with a variable number of ingress rules per environment. Dev needs 3, prod needs 7.
-
+{{< /qa >}}
+{{< qa num="42" q="You need a security group with a variable number of ingress rules per environment. Dev needs 3, prod needs 7." level="intermediate" >}}
 **Answer:**
 
 ```hcl
@@ -2144,12 +1880,8 @@ resource "aws_security_group" "web" {
 }
 ```
 
----
-
-### Q43 — Manage 15 AWS accounts with Terragrunt
-
-> 🎯 **Scenario:** Your organization has 15 AWS accounts. Managing backends and provider configs is getting unmanageable.
-
+{{< /qa >}}
+{{< qa num="43" q="Your organization has 15 AWS accounts. Managing backends and provider configs is getting unmanageable." level="advanced" >}}
 **Answer:**
 
 **Terragrunt** — a thin wrapper that DRYs up repetitive Terraform configuration:
@@ -2208,12 +1940,8 @@ terragrunt run-all plan    # Plans all modules
 terragrunt run-all apply   # Applies all in dependency order
 ```
 
----
-
-### Q44 — Deploy to multiple AWS regions with provider aliases
-
-> 🎯 **Scenario:** Deploy the same infrastructure to us-east-1 and eu-west-1 using the same code.
-
+{{< /qa >}}
+{{< qa num="44" q="Deploy the same infrastructure to us-east-1 and eu-west-1 using the same code." level="advanced" >}}
 **Answer:**
 
 ```hcl
@@ -2262,12 +1990,8 @@ module "app_eu" {
 }
 ```
 
----
-
-### Q45 — Taint vs Replace — what's the difference?
-
-> 🎯 **Scenario:** "What is the difference between `terraform taint` and `terraform apply -replace`?"
-
+{{< /qa >}}
+{{< qa num="45" q="What is the difference between terraform taint and terraform apply -replace?" level="intermediate" >}}
 **Answer:**
 
 | Command | Terraform Version | What it does |
@@ -2403,6 +2127,8 @@ base64encode(string)         # Base64 encode
 filebase64sha256("file.zip") # SHA256 hash of file
 format("%-10s %s", a, b)     # String formatting
 ```
+
+{{< /qa >}}
 
 ---
 
